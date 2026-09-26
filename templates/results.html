@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analysis Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="result-header">
+        <h1>Analysis Results</h1>
+        <a href="/" class="button secondary">Back</a>
+      </header>
+
+      <section class="panel">
+        <h2>Project Summary</h2>
+        <ul>
+          <li><strong>Total requirements:</strong> {{ result.summary.total_requirements }}</li>
+          <li><strong>Risk level:</strong> {{ result.summary.risk_level }}</li>
+          <li><strong>Detected categories:</strong> {% for key, value in result.summary.categories.items() %}{{ key }} ({{ value }}), {% endfor %}</li>
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>Functional Requirements</h2>
+        <ol>
+          {% for req in result.functional_requirements %}
+            <li>{{ req }}</li>
+          {% endfor %}
+        </ol>
+      </section>
+
+      <section class="panel">
+        <h2>Non-Functional Requirements</h2>
+        <ol>
+          {% for req in result.non_functional_requirements %}
+            <li>{{ req }}</li>
+          {% endfor %}
+        </ol>
+      </section>
+
+      <section class="panel">
+        <h2>SDLC Recommendation</h2>
+        <p><strong>Recommended model:</strong> {{ result.sdlc_recommendation.model }}</p>
+        <p><strong>Rationale:</strong> {{ result.sdlc_recommendation.rationale }}</p>
+        <ul>
+          {% for item in result.sdlc_recommendation.workflow %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>User Stories</h2>
+        <ul>
+          {% for story in result.user_stories %}
+            <li><strong>{{ story.id }}</strong> - {{ story.story }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>Use Cases</h2>
+        <ul>
+          {% for use_case in result.use_cases %}
+            <li><strong>{{ use_case.id }}</strong> - {{ use_case.name }}: {{ use_case.description }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>Acceptance Criteria</h2>
+        <ul>
+          {% for ac in result.acceptance_criteria %}
+            <li><strong>{{ ac.id }}</strong> - {{ ac.statement }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>Traceability Matrix</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Category</th>
+              <th>Requirement</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in result.traceability_records %}
+            <tr>
+              <td>{{ item.id }}</td>
+              <td>{{ item.category }}</td>
+              <td>{{ item.requirement }}</td>
+              <td>{{ item.status }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel">
+        <h2>Regulatory Mapping</h2>
+        <ul>
+          {% for item in result.regulatory_mappings %}
+            <li>
+              <strong>{{ item.category }}</strong> - {{ item.requirement }}<br>
+              Regulations: {{ item.regulations | join(', ') }}<br>
+              Controls: {{ item.controls | join(', ') }}
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>
