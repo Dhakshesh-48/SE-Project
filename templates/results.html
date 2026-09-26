@@ -23,6 +23,42 @@
       </section>
 
       <section class="panel">
+        <h2>System Scope</h2>
+        <ul>
+          {% for item in result.project_scope %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>Stakeholders</h2>
+        <ul>
+          {% for item in result.stakeholders %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>Input Sources</h2>
+        <ul>
+          {% for item in result.input_sources %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>Multi-Agent Architecture</h2>
+        <ul>
+          {% for item in result.multi_agent_architecture %}
+            <li><strong>{{ item.agent }}</strong> - {{ item.responsibility }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="panel">
         <h2>Functional Requirements</h2>
         <ol>
           {% for req in result.functional_requirements %}
