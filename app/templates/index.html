@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ReqMind — Financial Requirements Workspace</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">R</span><span>ReqMind</span></div>
+      <p>Clear, traceable requirements for financial products</p>
+      <a id="exportLink" class="icon-action is-hidden" title="Export project JSON" download>Export JSON</a>
+    </header>
+    <div class="app-shell">
+      <aside class="workflow-rail" aria-label="Project workflow">
+        <p class="rail-label">YOUR WORKFLOW</p>
+        <h2>From idea<br>to delivery</h2>
+        <p class="rail-intro">Turn stakeholder knowledge into evidence-backed decisions.</p>
+        <nav class="steps" aria-label="Project stages">
+          <ol>
+            <li class="active" data-step="0" aria-current="step"><span class="step-number">01</span><span><strong>Project setup</strong><small>Interview stakeholders</small></span></li>
+            <li data-step="1"><span class="step-number">02</span><span><strong>Source evidence</strong><small>Search indexed material</small></span></li>
+            <li data-step="2"><span class="step-number">03</span><span><strong>Requirements</strong><small>Generate grounded drafts</small></span></li>
+            <li data-step="3"><span class="step-number">04</span><span><strong>Review & delivery</strong><small>Quality checks and SDLC</small></span></li>
+          </ol>
+        </nav>
+        <div class="rail-note"><span class="note-icon">✓</span><p><strong>Human-led by design</strong><br>Every draft stays reviewable and linked to its source.</p></div>
+      </aside>
+      <main>
+      <section class="workspace" aria-labelledby="workspace-title">
+        <div class="section-heading">
+          <div><p class="eyebrow">Project workspace</p><h1 id="workspace-title">Traceable requirement decisions</h1></div>
+          <span id="projectState" class="state">No project loaded</span>
+        </div>
+        <form id="interviewStartForm" class="intake">
+          <div class="interview-heading"><p class="eyebrow">Adaptive stakeholder interview</p><p>Begin with the essentials. The next questions adapt to the financial workflow you describe.</p></div>
+          <div class="starter-grid">
+            <label>Financial functionality<input id="functionality" placeholder="e.g. Digital customer onboarding and KYC" required minlength="3"></label>
+            <label>Business objective<textarea id="businessObjective" placeholder="What problem should this solve, and why does it matter?" required></textarea></label>
+            <label>Users and roles<textarea id="usersRoles" placeholder="Who uses it, and what must each role be able to do?" required></textarea></label>
+          </div>
+          <label class="upload-label">Supporting documents (optional)<input id="files" type="file" accept=".txt,.md,.csv,.pdf,.docx" multiple></label>
+          <button type="submit">Start interview</button>
+        </form>
+        <section id="interviewSession" class="interview-session is-hidden" aria-live="polite">
+          <div class="interview-meta"><span id="questionProgress" class="state"></span><span id="answerCount" class="muted"></span></div>
+          <p id="questionTopic" class="eyebrow"></p>
+          <h2 id="interviewQuestion"></h2>
+          <textarea id="interviewAnswer" placeholder="Write the information you know. Specific rules, limits, conditions, and outcomes are especially useful."></textarea>
+          <div class="interview-actions"><button id="continueInterview" type="button">Save and continue</button><button id="skipInterviewQuestion" class="quiet-button" type="button">Skip for now</button></div>
+        </section>
+        <section id="interviewComplete" class="interview-complete is-hidden">
+          <p class="eyebrow">Interview ready</p><h2>Turn the conversation into evidence-grounded requirements</h2>
+          <p id="interviewSummary" class="muted"></p>
+          <button id="createProject" type="button">Create project</button>
+        </section>
+        <p class="quiet">Responses and optional documents are masked for common account, identity, and tax-ID patterns before local processing. Drafts are advisory and need human approval.</p>
+      </section>
+
+      <section id="documentsPanel" class="panel is-hidden" aria-labelledby="documents-title">
+        <div class="panel-title"><div><p class="eyebrow">RAG knowledge base</p><h2 id="documents-title">Indexed source documents</h2></div><button id="generateButton" type="button">Generate requirements</button></div>
+        <div id="ragSummary" class="rag-summary" aria-label="RAG index status"></div>
+        <div id="documentList" class="document-list"></div>
+        <div class="retrieval-toolbar"><label>Search indexed evidence<input id="retrievalQuery" placeholder="Ask the vector index about a requirement or control"></label><button id="retrieveButton" type="button">Retrieve</button><span id="retrievalCount" class="count"></span></div>
+        <div id="retrievalResults" class="retrieval-results"></div>
+      </section>
+
+      <section id="requirementsPanel" class="panel is-hidden" aria-labelledby="requirements-title">
+        <div class="panel-title"><div><p class="eyebrow">Human review required</p><h2 id="requirements-title">Generated requirements</h2></div><span id="requirementCount" class="count"></span></div>
+        <div id="requirementsList" class="requirements-list"></div>
+      </section>
+
+      <section id="qualityPanel" class="panel is-hidden" aria-labelledby="quality-title">
+        <div class="panel-title"><div><p class="eyebrow">Quality analysis</p><h2 id="quality-title">Review queue</h2></div><span id="issueCount" class="count"></span></div>
+        <div id="issuesList" class="issues-list"></div>
+      </section>
+
+      <section id="sdlcPanel" class="panel is-hidden" aria-labelledby="sdlc-title">
+        <div class="panel-title"><div><p class="eyebrow">Architecture advisory</p><h2 id="sdlc-title">SDLC analysis</h2></div><button id="sdlcButton" type="button">Run SDLC analysis</button></div>
+        <div id="sdlcResult"></div>
+      </section>
+      </main>
+    </div>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

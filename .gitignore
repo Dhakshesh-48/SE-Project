@@ -1,11 +1,7 @@
-__pycache__/
-*.pyc
 .venv/
-.env
+__pycache__/
 .pytest_cache/
+data/chroma/
+*.pyc
+.env
 .DS_Store
-requirements.db
-frontend/node_modules/
-frontend/dist/
-frontend/*.tsbuildinfo
-postgres_data/
