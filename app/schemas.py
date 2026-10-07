@@ -23,12 +23,83 @@ class Category(StrEnum):
     OPERATIONAL = "Operational / maintenance"
 
 
+class InterviewQuestionRequest(BaseModel):
+    functionality: str = Field(min_length=3, max_length=500)
+    answers: dict[str, str] = Field(default_factory=dict)
+    asked_question_keys: list[str] = Field(default_factory=list)
+
+
+class InterviewQuestionResponse(BaseModel):
+    key: str | None = None
+    topic: str | None = None
+    prompt: str | None = None
+    mode: Literal["Groq adaptive agent", "Local fallback"]
+    completed: bool = False
+
+
 class Evidence(BaseModel):
     document_id: str
     document_name: str
     chunk_id: str
     excerpt: str
     relevance: float = Field(ge=0, le=1)
+    source_url: str | None = None
+    source_version: str | None = None
+    effective_date: str | None = None
+
+
+class ComplianceMapping(BaseModel):
+    """A reviewable control suggestion, never a legal determination."""
+
+    control_id: str
+    source_title: str
+    source_url: str
+    jurisdiction: str = "India"
+    applicability: str
+    rationale: str
+    human_approval_required: bool = True
+
+
+class RiskEntry(BaseModel):
+    id: str
+    requirement_id: str
+    title: str
+    category: Literal["Security", "Privacy", "Compliance", "Operational", "Integration"]
+    level: Literal["Low", "Medium", "High"]
+    rationale: str
+    mitigation: str
+    owner_role: str
+    status: Literal["Open", "Accepted", "Mitigated"] = "Open"
+
+
+class TraceabilityRecord(BaseModel):
+    requirement_id: str
+    source_document: str
+    source_chunk_id: str
+    control_ids: list[str] = Field(default_factory=list)
+    risk_ids: list[str] = Field(default_factory=list)
+
+
+class ApprovalDecision(BaseModel):
+    id: str
+    subject_type: Literal["Requirement", "SDLC", "Compliance mapping", "Release"]
+    subject_id: str
+    decision: Literal["Approved", "Rejected", "Needs review"]
+    reviewer: str
+    reviewer_role: str
+    rationale: str = ""
+    at: datetime
+
+
+class EvaluationMetrics(BaseModel):
+    requirements_count: int = 0
+    citation_coverage: float = Field(ge=0, le=1)
+    measurable_acceptance_coverage: float = Field(ge=0, le=1)
+    rbi_control_coverage: float = Field(ge=0, le=1)
+    open_high_issues: int = 0
+    open_risks: int = 0
+    human_review_coverage: float = Field(ge=0, le=1)
+    notes: list[str] = Field(default_factory=list)
 
 
 class Requirement(BaseModel):
@@ -42,6 +113,7 @@ class Requirement(BaseModel):
     assumptions: list[str] = Field(default_factory=list)
     acceptance_criteria: list[str] = Field(default_factory=list)
     applicable_policy: str | None = None
+    compliance_mappings: list[ComplianceMapping] = Field(default_factory=list)
     risk_level: Literal["Low", "Medium", "High"] = "Medium"
     confidence: float = Field(ge=0, le=1)
     reasoning: str
@@ -88,6 +160,14 @@ class SdlcRecommendation(BaseModel):
     human_approval_required: bool = True
 
 
+class AgentRun(BaseModel):
+    agent: str
+    responsibility: str
+    status: Literal["Completed", "Waiting for human review"]
+    output: str
+    at: datetime
+
+
 class Project(BaseModel):
     id: str
     functionality: str
@@ -95,5 +175,12 @@ class Project(BaseModel):
     documents: list[dict] = Field(default_factory=list)
     requirements: list[Requirement] = Field(default_factory=list)
     quality_issues: list[QualityIssue] = Field(default_factory=list)
+    risks: list[RiskEntry] = Field(default_factory=list)
+    traceability: list[TraceabilityRecord] = Field(default_factory=list)
+    artefacts: dict = Field(default_factory=dict)
+    clarification_questions: list[str] = Field(default_factory=list)
+    approvals: list[ApprovalDecision] = Field(default_factory=list)
+    evaluation: EvaluationMetrics | None = None
     sdlc: SdlcRecommendation | None = None
+    agent_runs: list[AgentRun] = Field(default_factory=list)
     audit_log: list[dict] = Field(default_factory=list)
