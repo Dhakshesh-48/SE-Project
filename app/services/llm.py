@@ -51,7 +51,7 @@ def _post_chat(prompt: str) -> dict:
         headers={
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
-            "User-Agent": "FinReq-Studio/1.0",
+            "User-Agent": "ReqMind/1.0",
         },
         method="POST",
     )

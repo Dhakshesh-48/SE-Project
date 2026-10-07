@@ -46,7 +46,7 @@ INTERVIEW_TOPICS = [
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     print("\n" + "=" * 56)
-    print("  FinReq Studio is running")
+    print("  ReqMind is running")
     print("  App:      http://127.0.0.1:8000")
     print("  API docs: http://127.0.0.1:8000/docs")
     print("  RAG:      ChromaDB + OpenAI-compatible embeddings")
@@ -54,10 +54,10 @@ async def lifespan(_: FastAPI):
     print("  Stop:     press Ctrl+C")
     print("=" * 56 + "\n")
     yield
-    print("FinReq Studio stopped.")
+    print("ReqMind stopped.")
 
 
-app = FastAPI(title="FinReq Studio", version="0.1.0", lifespan=lifespan)
+app = FastAPI(title="ReqMind", version="0.1.0", lifespan=lifespan)
 app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
 
 
@@ -339,6 +339,6 @@ def get_evaluation(project_id: str) -> JSONResponse:
 @app.get("/api/projects/{project_id}/export")
 def export_project(project_id: str) -> JSONResponse:
     try:
-        return JSONResponse(store.export(store.get(project_id)), headers={"Content-Disposition": f'attachment; filename="finreq-{project_id}.json"'})
+        return JSONResponse(store.export(store.get(project_id)), headers={"Content-Disposition": f'attachment; filename="reqmind-{project_id}.json"'})
     except KeyError as exc:
         raise HTTPException(404, "Project not found.") from exc

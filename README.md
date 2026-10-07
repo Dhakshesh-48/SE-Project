@@ -1,6 +1,6 @@
-# FinReq Studio
+# ReqMind
 
-FinReq Studio is an RBI-scoped financial requirements engineering prototype built around a Retrieval-Augmented Generation (RAG) workflow. It turns stakeholder responses and supporting documents into traceable draft requirements, reviewable RBI control suggestions, derived requirements artefacts, and an SDLC advisory for human review.
+ReqMind is an RBI-scoped financial requirements engineering prototype built around a Retrieval-Augmented Generation (RAG) workflow. It turns stakeholder responses and supporting documents into traceable draft requirements, reviewable RBI control suggestions, derived requirements artefacts, and an SDLC advisory for human review.
 
 ## Agent workflow
 
@@ -50,24 +50,47 @@ Every requirement is linked to retrieved evidence. Requirements are drafts, begi
 
 ## Quick Start
 
-Requires Python 3.10 or later.
+Requires Python 3.10 or later. Run these commands from the project root.
+
+### Windows PowerShell
+
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+If `py` is not recognized, install Python from [python.org](https://www.python.org/downloads/windows/) and enable **Add python.exe to PATH** during installation. If PowerShell blocks virtual-environment activation, allow it for the current terminal and activate again:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+```
+
+After the initial setup, start the app in a new terminal with:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+### Linux and macOS
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
-.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+python -m pip install -r requirements.txt
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-Open http://127.0.0.1:8000.
-
-To use a different port, replace `8000` in the start command, for example `--port 8080`, then open `http://127.0.0.1:8080`.
+Open http://127.0.0.1:8000. To use another port, replace `8000` in the start command and URL, for example `--port 8080` and `http://127.0.0.1:8080`.
 
 ## LLM Configuration
 
 The project works without an API key. In this local mode, it uses deterministic local embeddings for ChromaDB retrieval and creates evidence-only requirement drafts.
 
-To enable OpenAI-compatible embeddings and LLM-generated requirements, create a `.env` file in the project root:
+To enable LLM-generated requirements, create a `.env` file in the project root. For OpenAI, use:
 
 ```text
 LLM_API_KEY=your_new_api_key
@@ -79,14 +102,19 @@ APP_DATA_DIR=data
 VECTOR_DB_PATH=data/chroma
 ```
 
-For Groq generation, use its OpenAI-compatible endpoint and a Groq chat model. Groq does not offer the OpenAI embeddings endpoint used by this app, so leave `EMBEDDING_MODEL` blank to use the built-in local embeddings:
+For Grok generation, use xAI's OpenAI-compatible endpoint and a model enabled for your xAI account. Leave `EMBEDDING_MODEL` blank to use the built-in local embeddings; this app does not use xAI embeddings:
 
 ```text
-LLM_API_KEY=your_groq_api_key
-LLM_BASE_URL=https://api.groq.com/openai/v1
-LLM_MODEL=openai/gpt-oss-120b
+LLM_API_KEY=your_xai_api_key
+LLM_BASE_URL=https://api.x.ai/v1
+LLM_MODEL=grok-3-mini
 EMBEDDING_MODEL=
+
+APP_DATA_DIR=data
+VECTOR_DB_PATH=data/chroma
 ```
+
+Create an API key in the [xAI Console](https://console.x.ai/) under **API Keys**. API access may require credits or billing setup. Copy the key into `.env`; keep it secret. Check xAI's [model documentation](https://docs.x.ai/developers/models) for model IDs currently available to your account. The chat model list can change.
 
 `OPENAI_API_KEY` is also supported as an alternative to `LLM_API_KEY`. Restart the server after changing `.env`.
 
@@ -139,10 +167,18 @@ data/                     Local JSON projects and ChromaDB data
 
 ## Tests
 
-Run the automated test suite from the project root:
+Run the automated test suite from the project root.
+
+On Windows PowerShell:
+
+```powershell
+python -m pytest -q
+```
+
+On Linux or macOS:
 
 ```bash
-.venv/bin/python -m pytest -q
+python -m pytest -q
 ```
 
 ## Troubleshooting
