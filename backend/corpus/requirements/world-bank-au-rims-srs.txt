@@ -1,0 +1,3120 @@
+ Software Requirements Specification for AU R-IMS Solution Page 1 
+ 
+   
+ 
+ 
+Appendix 2: Software Requirements Specification  
+Consultancy for Scoping of a Continental Regulatory Information Management System 
+Solution and Information Sharing Platform for the Member States in the African Union 
+ 
+ 
+ 
+ 
+To: 
+Senior Operations Officer, 
+The World Bank Group, 
+Washington DC. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Submitted by: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+September 30, 2020 
+ 
+ 
+ Public Disclosure Authorized
+Public Disclosure Authorized
+Public Disclosure Authorized
+Public Disclosure Authorized
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 2 
+ 
+   
+ 
+ 
+Table of Contents 
+Table of Contents 2 
+List of Tables 5 
+List of Figures 6 
+1 Introduction 7 
+1.1 Purpose 7 
+1.2 Project Scope 7 
+1.3 Intended Audience and Reading Suggestions 7 
+2 Overall Description 8 
+2.1 Product Functions 8 
+2.2 User Classes and Characteristics (Actors) 11 
+2.3 Operating Environment 11 
+2.4 Design and Implementation Constraints 11 
+2.5 User Documentation 11 
+2.6 Assumptions and Dependencies 11 
+3 Specific Requirements: Functional Requirements (Use Cases) 13 
+3.1 Premise licenses 17 
+3.1.1 Premise license registration 17 
+3.1.2 Premise License Renewal 18 
+3.1.3 Premise License Variation 19 
+3.1.4 Premise Price Setup 20 
+3.1.5 Premise licensing period setup 21 
+3.1.6 Premise invoice expiry setup 22 
+3.2 Product licenses 23 
+3.2.1 Register New Product 23 
+3.2.1.1 Add Product details 23 
+3.2.1.2 Add Applicant Info 24 
+3.2.1.3 Add Dosage Form 25 
+3.2.1.4 Add Shelf Life 26 
+3.2.1.5 Add Marketing Authorization 27 
+3.2.1.6 Add Manufacturers (FFP) 29 
+3.2.1.7 Add Manufacturers (API) 30 
+3.2.1.8 Add Brokers and suppliers 31 
+3.2.1.9 Add Medicinal Product 32 
+3.2.1.10 Add Contract Organization 33 
+3.2.2 Product license retention 34 
+3.2.3 Product License Variation 35 
+3.2.4 Product License Withdrawal 36 
+3.2.5 Product Clinical Trial 37 
+3.2.5.1 Add List of Submissions 37 
+3.2.5.2 Add Administrative Details 39 
+3.2.5.3 Add Investigational Product 40 
+3.2.5.4 Add Investigators and trial sites 41 
+3.2.5.5 Add other details 42 
+3.2.5.6 Add Ethics documents 43 
+3.2.6 Product Survey 45 
+3.2.7 Product Promotion 45 
+3.2.8 Product Price Setup 47 
+3.2.9 Product Licensing Period Setup 48 
+
+ Software Requirements Specification for AU R-IMS Solution Page 3 
+ 
+   
+ 
+ 
+3.2.10 Product Invoice Expiry Setup 49 
+3.3 Import and Export 50 
+3.3.1 Permit Import/Export 50 
+3.3.1.1 Import Permit Registration 50 
+3.3.1.2 Export Permit Registration 51 
+3.3.2 License Import/Export 52 
+3.3.2.1 Import License Registration 52 
+3.3.2.2 Export License Registration 53 
+3.3.2.3 Import License Renewal 54 
+3.3.2.4 Export License Renewal 55 
+3.3.3 Import/Export Price Setup 56 
+3.3.3.1 Import Price Setup 56 
+3.3.4 Licensing Period Setup 57 
+3.3.4.1 Import Licensing Period 57 
+Licensing period has been imported 57 
+3.3.4.2 Export Licensing Period 58 
+3.3.5 Invoice Expiry Setup 59 
+3.3.5.1 Import Invoice Expiry Setup 59 
+3.3.5.2 Export Invoice Expiry Setup 60 
+3.4 Document Library 61 
+3.4.1 Inputs/Output document 61 
+3.4.1.1 Add new document 61 
+3.5 System administration 62 
+3.5.1 Manage users 62 
+3.5.1.1 Add New User 62 
+3.5.1.2 Display users 63 
+3.5.1.3 Manage User Permissions 64 
+3.5.2 Manage Authentication 65 
+3.5.2.1 Add New Role 65 
+3.5.2.2 Display Roles 66 
+3.5.2.3 . Edit Role Permissions 67 
+4 External Interface Requirements 68 
+4.1 User Interfaces 68 
+4.1.1 Add Product License registration 68 
+4.1.2 Product promotion 74 
+4.1.3 Product clinical trial 75 
+4.2 Hardware Interfaces 82 
+4.3 Software Interfaces 82 
+4.4 Communications Interfaces 82 
+5 Other Nonfunctional Requirements 83 
+5.1 Performance Requirements 83 
+5.2 Safety Requirements 83 
+5.3 Security Requirements 83 
+5.4 Software Quality Attributes 83 
+5.4.1 Availability 83 
+5.4.2 Reliability 83 
+5.4.3 Efficiency 84 
+5.4.4 Effectiveness 84 
+5.4.5 Fault Tolerance 84 
+5.4.6 Privacy 84 
+
+ Software Requirements Specification for AU R-IMS Solution Page 4 
+ 
+   
+ 
+ 
+5.4.7 Data Integrity 84 
+6 Other Requirements 85 
+6.1.1 Definitions 85 
+6.1.2 Abbreviations 85 
+6.1.3 Acronyms 85 
+ 
+ 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 5 
+ 
+   
+ 
+ 
+List of Tables 
+Table 1-1: Document Readers and Their Recommended Reading ................................ ................................ ................................ .............8 
+Table 2-1: Function's Priorities Range ................................ ................................ ................................ ................................ ........................ 8 
+Table 2-2: Product Functions ................................ ................................ ................................ ................................ ................................ ......9 
+Table 2-3: System Actors ................................ ................................ ................................ ................................ ................................ ..........11 
+Table 3-1: Functional Requirements for Use Case Premise License Registration ................................ ................................ .....................17 
+Table 3-2: Functional Requirements for Use Case Premise License Renewal ................................ ................................ .......................... 18 
+Table 3-3: Functional Requirements for Use Case Premise License Variation ................................ ................................ ......................... 19 
+Table 3-4: Functional Requirements for Use Case Premise Price Setup ................................ ................................ ................................ ...20 
+Table 3-5: Functional Requirements for Use Case Premise Licensing Period Setup ................................ ................................ .................21 
+Table 3-6: Functional Requirements for Use Case Premise Invoice Expiry Setup................................ ................................ .....................22 
+Table 3-7: Functional Requirements for Use Case Add Product Details ................................ ................................ ................................ ...23 
+Table 3-8: Functional Requirements for Use Case Add Applicant Info ................................ ................................ ................................ .....24 
+Table 3-9: Functional Requirements for Use Case Add Dosage Form ................................ ................................ ................................ ......25 
+Table 3-10: Functional Requirements for Use Case Product License Registration /Add Shelf Life ................................ ........................... 26 
+Table 3-11: Functional Requirements for Use Case Product License Registration/Add Marketing Authorization ................................ ...27 
+Table 3-12: Functional Requirements for Use Case Product License Registration/Add Manufactures ................................ ....................29 
+Table 3-13: Functional Requirements for Use Case Product License Registration/ Add Manufactures ................................ ...................30 
+Table 3-14: Functional Requirements for Use Case Product License Registration/Add Brokers And Suppliers ................................ .......31 
+Table 3-15: Functional Requirements for Use Case Product License Registration/Add Medicinal Product ................................ .............32 
+Table 3-16: Functional Requirements for Use Case Product License Registration/Add Contract Organization ................................ .......33 
+Table 3-17: Functional Requirements for Use Case Product License Retention ................................ ................................ ...................... 34 
+Table 3-18: Functional Requirements for Use Case Product License Variation ................................ ................................ ........................ 35 
+Table 3-19: Functional Requirements for Use Case Product License Withdrawal ................................ ................................ ....................36 
+Table 3-20: Functional Requirements for Use Case Product Clinical Trial/Add List of Submissions ................................ ......................... 37 
+Table 3-21: Functional Requirements for Use Case Product Clinical Trial/Add Administrative Details ................................ ....................39 
+Table 3-22: Functional Requirements for Use Case Product Clinical Trial/Add Administrative Details/Add Investigational Products .....40 
+Table 3-23: Functional Requirements for Use Case Product Clinical Trial/ Add Investigators/Trial Sites ................................ .................41 
+Table 3-24: Functional Requirements for Use Case Product Clinical Trial/ Add Other Details ................................ ................................ .42 
+Table 3-25: Functional Requirements for Use Case Product Clinical Trial/Add Ethics Documents ................................ .......................... 43 
+Table 3-26: Functional Requirements for Use Case Product Survey ................................ ................................ ................................ ........45 
+Table 3-27: Functional Requirements for Use Case Product Promotion ................................ ................................ ................................ ..45 
+Table 3-28: Functional Requirements for Use Case Product Price Setup ................................ ................................ ................................ .47 
+Table 3-29: Functional Requirements for Use Case Product Licensing Period Setup ................................ ................................ ...............48 
+Table 3-30: Functional Requirements for Use Case Product Invoice Expiry Setup ................................ ................................ ...................49 
+Table 3-31: Functional Requirements for Use Case Import Permit Registration ................................ ................................ ...................... 50 
+Table 3-32: Functional Requirements for Use Case Export Permit Registration ................................ ................................ ...................... 51 
+Table 3-33: Functional Requirements for Use Case Import License Registration ................................ ................................ .....................52 
+Table 3-34: Functional Requirements for Use Case Import/Export License Renewal ................................ ................................ ..............53 
+Table 3-35: Functional Requirements for Use Case Import License Renewal ................................ ................................ .......................... 54 
+Table 3-36: Functional Requirements for Use Case Import/Export License Renewal ................................ ................................ ..............55 
+Table 3-37: Functional Requirements for Use Case Price Setup................................ ................................ ................................ ...............56 
+Table 3-38: Functional Requirements for Use Case Import and Export Licensing Period Setup ................................ .............................. 57 
+Table 3-39: Functional Requirements for Use Case Import and Export Licensing Period Setup ................................ .............................. 58 
+Table 3-40: Functional Requirements for Use Case Import and Export Invoice Expiry Setup ................................ ................................ ..59 
+Table 3-41: Functional Requirements for Use Case Import and Export Invoice Expiry Setup ................................ ................................ ..60 
+Table 3-42: Functional Requirements for Use Case Add New Document ................................ ................................ ................................ 61 
+Table 3-43: Functional Requirement for Use case Add New User ................................ ................................ ................................ ............62 
+Table 3-44: Functional Requirement for Use Case Display Users ................................ ................................ ................................ .............63 
+Table 3-45: Functional Requirement for Use Case Manage Users’ Permissions ................................ ................................ ...................... 64 
+Table 3-46: Functional Requirements for Use Case Add New Role ................................ ................................ ................................ ..........65 
+Table 3-47: Functional Requirements for Use Case Display Roles ................................ ................................ ................................ ............66 
+Table 3-48: Functional Requirement for Edit Role Permission Use Case................................ ................................ ................................ ..67 
+Table 4-1: Hardware Specifications ................................ ................................ ................................ ................................ .......................... 82 
+Table 4-2: Software Interfaces................................ ................................ ................................ ................................ ................................ ..82 
+Table 6-1: Definitions................................ ................................ ................................ ................................ ................................ ................85 
+Table 6-2: Abbreviations ................................ ................................ ................................ ................................ ................................ ...........85 
+
+ Software Requirements Specification for AU R-IMS Solution Page 6 
+ 
+   
+ 
+ 
+Table 6-3 Acronyms ................................ ................................ ................................ ................................ ................................ ..................85 
+ 
+List of Figures 
+Figure 3-1: Manufacturer User Case ................................ ................................ ................................ ................................ ........................ 13 
+Figure 3-2: Inspector Use Case ................................ ................................ ................................ ................................ ................................ .13 
+Figure 3-3: Importer User Case ................................ ................................ ................................ ................................ ................................ 14 
+Figure 3-4: Exporter Use Case ................................ ................................ ................................ ................................ ................................ ..14 
+Figure 3-5: Assessor Use Case ................................ ................................ ................................ ................................ ................................ ..15 
+Figure 3-6: Finance Use Case ................................ ................................ ................................ ................................ ................................ ....15 
+Figure 3-7: General Public Use Case ................................ ................................ ................................ ................................ ......................... 16 
+Figure 3-8: System Administrator Use Case ................................ ................................ ................................ ................................ .............16 
+Figure 4-1: Product Licensing Registration/Add Product Details ................................ ................................ ................................ ..............68 
+Figure 4-2: Product Licensing Registration/Add Product Details/Add Applicant Info ................................ ................................ ...............68 
+Figure 4-3: Product Licensing Registration/Add Product Details ................................ ................................ ................................ ..............69 
+Figure 4-4: Product Licensing Registration/Add Shelf Life ................................ ................................ ................................ ........................ 69 
+Figure 4-5: Product Licensing Registration/Add Marketing Authorization Details ................................ ................................ ...................70 
+Figure 4-6: Product Licensing Registration/Add Manufacturers (FPP) ................................ ................................ ................................ .....71 
+Figure 4-7: Product Licensing Registration/Add Manufacturers (API) ................................ ................................ ................................ ......71 
+Figure 4-8: Product Licensing Registration/Add Brokers and Suppliers ................................ ................................ ................................ ...72 
+Figure 4-9: Product Licensing Registration/Add Medicinal Product ................................ ................................ ................................ .........72 
+Figure 4-10: Product Licensing Registration/Add Contract Organization ................................ ................................ ................................ .73 
+Figure 4-11: Product Promotion ................................ ................................ ................................ ................................ ............................... 74 
+Figure 4-12: Product Clinical Trial Introduction ................................ ................................ ................................ ................................ ........75 
+Figure 4-13: Product Clinical Trial/Add List of Submissions ................................ ................................ ................................ ...................... 76 
+Figure 4-14: Product Clinical Trial/Investigational Products ................................ ................................ ................................ .....................77 
+Figure 4-15: Product Clinic Trial/Add Administrative Details................................ ................................ ................................ ....................78 
+Figure 4-16: Product Clinical Trial/Add Ethics Document ................................ ................................ ................................ ......................... 79 
+Figure 4-17: Product Clinical Trial/Other Details ................................ ................................ ................................ ................................ ......80 
+Figure 4-18: Product Clinical Trial/Add Investigators and Trial Sites ................................ ................................ ................................ ........81 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 7 
+ 
+   
+ 
+ 
+1 Introduction 
+1.1 Purpose  
+The purpose of this document is to present a detailed description of the Regulatory Information Management 
+System (R-MIS). It will explain the purpose and features of the system, the interfaces of the system, what the 
+system will do, the constraints under which it must operate and how the system will react to external stimuli. 
+This document is intended for both the stakeholders and the developers of the system and will be proposed 
+to the African Union (AU) for its approval.  
+ 
+To achieve this, an integrated continental Information Management System (IMS) will have to be developed 
+for the continent, by connecting Regional IMS (R-MIS) where they exist, ensuring interoperability. This will be 
+an important means of ensuring speedy a ccess to medical products that are safe, efficacious and of assured 
+quality to the African population as well as information on the same. The proposed continent-wide integrated 
+IMS should provide online and real-time availability of medicine regulation information and support workflow 
+management, where possible.  
+ 
+1.2 Project Scope 
+Project separated to two main web systems:  
+ 
+1. Online system for NMRA stakeholders providing information and services. The Portal consists of the 
+following modules: Premise Module, Product Module, GMP Module, Import and Export Module, 
+Finance Module, Content Module 
+ 
+2. Management Information System–This is the core system of the IMS implementation automating all 
+processing including handling logical processing for the Portal sys tem.  MIS consists of the following 
+modules:  Premise module, Product module, GMP module,  Import and Export module,  Inspection 
+module, Finance module, Document Library module, Report module, Administration module. 
+ 
+1.3 Intended Audience and Reading Suggestions 
+Section 1 of this document should be read by everyone.  This section gives the reader all the information 
+needed to read the rest of the document as well as a general overview of the problem, the solution and 
+describes how the solution will benefit the company. 
+ 
+Section 2 of this document should be read by everyone.  This section gives a detailed textual description of the 
+system, describes how the system might tie into already existing systems, lists the functionalities that will exist 
+in the s ystem, depicts the types of users of the system, describes general constraints and indicates the 
+assumptions and dependencies. 
+ 
+Section 3 of this document should be read by the system designer’s, implementers and maintainers in its 
+entirety.  For those who would like more information on a specific functionality can consult this section to get 
+more information on it.  This section contains a structured and detailed explanation of all functionalities, the 
+
+ Software Requirements Specification for AU R-IMS Solution Page 8 
+ 
+   
+ 
+ 
+external interfaces to the system, performance requirements, design constraints, quality attributes and other 
+requirements. 
+ 
+Table 1-1: Document Readers and Their Recommended Reading 
+Reader Type Recommended Reading 
+User Section 1 (all), 2 (all) 
+Manager Section 1 (all), 2 (all) 
+Requirement Engineer Section 1 (all), 2 (all), 3(all), 4(all) 
+System Designer Section 1 (all), 2 (all), 3(all), 4(all) 
+Implementor Section 1 (all), 2 (all), 3(selective), 4(all) 
+System Tester Section 1 (all), 2 (all), 3(all), 4(all) 
+System Maintainer Section 1 (all), 2 (all), 3(selective), 4(all) 
+2 Overall Description 
+2.1 Product Functions 
+Below is a list of all functions that can be found in the system with a description of the function and its priority.  
+The priorities range from 1 to 3, with 1 being the highest priority and 3 being the lowest.   
+ 
+Table 2-1: Function's Priorities Range 
+Priority Detail 
+1 Must have 
+2 Should have 
+3 Nice to have 
+ 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 9 
+ 
+   
+ 
+ 
+Table 2-2: Product Functions 
+ID Function Description Priority 
+1 Premise License 
+Registration 
+The system shall allow Actors to submit new premise 
+license registration applications 
+1 
+2 Premise License 
+Renewal 
+The system shall allow Actors to submit new premise 
+license renewal applications 
+1 
+3 Premise License 
+Variation 
+The system shall allow Actors to submit new premise 
+license variation applications 
+1 
+4 Premise License 
+Withdrawal 
+The system shall allow Actors to submit new premise 
+license withdrawal applications 
+1 
+5 Premise Price 
+Setup 
+The system shall allow Actors to setup price for 
+applications 
+1 
+6 Premise Licensing 
+Period Setup 
+The system shall allow Actors to setup new premise 
+license period setup for applications 
+1 
+7 Premise Invoice 
+Expiry Setup 
+The system shall allow Actors to setup invoice expiry 1 
+8 Product License 
+Retention 
+The system shall allow Actors to submit product license 
+retention applications 
+1 
+9 Product License 
+Variation 
+The system shall allow Actors to submit new product 
+license variation applications 
+1 
+10 Product License 
+Withdrawal 
+The system shall allow Actors to submit new product 
+license withdrawal applications 
+1 
+11 Product Clinical 
+Trial 
+The system shall allow Actors to submit application for 
+clinical trial 
+1 
+12 Product Survey The system shall allow Actors to submit product survey 1 
+13 Product 
+Promotion 
+The system shall allow Actors to submit product 
+promotion applications 
+1 
+14 Product Price 
+Setup 
+The system shall allow Actors to submit new product 
+license price for applications 
+1 
+15 Product Licensing 
+Period Setup 
+The system shall allow Actors to setup product license 
+period for applications 
+1 
+16 Product Invoice 
+Expiry Setup 
+The system shall allow Actors to setup invoice expiry for 
+applications 
+1 
+17 Import Permit The system shall allow Actors to import permit 1 
+18 Export Permit The system shall allow Actors to export permit 1 
+19 Import License 
+Registration 
+The system shall allow Actors to import license 
+registration  
+1 
+20 Import License 
+Renewal 
+The system shall allow Actors to import license renewal  1 
+21 Export License 
+Registration 
+The system shall allow Actors to export license registration  1 
+22 Export License 
+Renewal 
+The system shall allow Actors to export license renewal 1 
+23 Import Permit 
+Registration 
+The system shall allow Actors to import license 
+registration 
+1 
+
+ Software Requirements Specification for AU R-IMS Solution Page 10 
+ 
+   
+ 
+ 
+24 Export Permit 
+Registration 
+The system shall allow Actors to export license registration 1 
+25 Import/Export 
+License 
+Registration 
+The system shall allow Actors to import/export license 
+registration 
+1 
+26 Import/Export 
+License Renewal 
+The system shall allow Actors to import/export license 
+renewal 
+1 
+27 import/export 
+Price Setup 
+The system shall allow Actors to import/export price setup 1 
+28 Import and 
+Export Licensing 
+Period Setup 
+The system shall allow Actors to import/export exporting 
+licensing period setup 
+1 
+29 Import and 
+Export Invoice 
+Expiry Setup 
+The system shall allow Actors to import/export exporting 
+invoice expiry setup 
+1 
+30 GMP License 
+Registration 
+The system shall allow Actors to register GMP license 1 
+31 GMP License 
+Renewal 
+The system shall allow Actors to renew GMP license 1 
+32 GMP Inspection 
+Assignment 
+The system shall allow Actors for GNP inspection 
+assignment 
+1 
+33 Premise 
+Inspection 
+Assignment 
+The system shall allow Actors to premise inspection 
+assignment 
+1 
+34 Premise 
+Inspection  
+The system shall allow Actors to premise inspection 1 
+35 Premise 
+Inspection 
+Approval 
+The system shall allow Actors to premise inspection 
+approval 
+1 
+36 Premise 
+Inspection Admin 
+ 1 
+37 POE Inspection 
+Application 
+The system shall allow Actors to POE inspection 
+Application 
+1 
+38 POE Inspection 
+Approval 
+The system shall allow Actors to POE inspection approval 1 
+39 Payment 
+(submission) 
+The system shall allow Actors to submit payments 1 
+40 Invoicing (auto 
+generation) 
+The system shall allow Invoicing (auto generation) 1 
+41 Pricing (setup) The system shall allow pricing setup 1 
+42 Currency Setup  1 
+43 Exchange Rate 
+Setup 
+The system shall allow Actors to setup exchange rate 1 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 11 
+ 
+   
+ 
+ 
+2.2 User Classes and Characteristics (Actors) 
+Table 2-3: System Actors 
+Actor Description 
+General Public  all the people who are not members of a particular organization or who 
+do not have any special type of permissions 
+Manufacturers  a person or company that makes goods for sale and has special 
+permissions to access. 
+Importers  a person or organization that brings goods or services into a country 
+from abroad for sale and has special permissions to access. 
+Exporters  a person, country, or company that sends goods or services to another 
+country for sale. 
+Inspectors  an official employed to ensure that official regulations are obeyed, 
+especially in public services. 
+Assessors  a person who evaluates the quality of a person or thing and calculates or 
+estimates the price or value of something 
+Finance  the management of money, especially by companies or organization and 
+has special permission on the system 
+Management  the administration of an organization 
+Laboratory 
+Technicians 
+the backbone of a scientific research lab. Their work is almost entirely 
+laboratory-based, and technicians may work alone or as part of a team 
+of scientific staff. They can work in most areas of science including health 
+and manufacturing. 
+2.3 Operating Environment 
+The application will operate at web browsers on windows, Linux (GUI), android or any other operating 
+system has GUI and connection to the internet 
+2.4 Design and Implementation Constraints 
+● The MIS shall be designed with a Service Oriented Architecture (SOA). 
+● The MIS shall build so that it can follow Representational State Transfer (REST). 
+● The MIS must be designed with Modal-View-Controller (MVC) architecture. 
+● The MIS must use open source programming technology. 
+● The MIS code shall build on Test Driven Development (TDD) 
+ 
+2.5 User Documentation 
+The MIS shall have a hardcopy user guide that explains all the functions.    
+The MIS shall have an online user guide that explains the functions of the System 
+2.6 Assumptions and Dependencies 
+● The MIS system shall maintain unique user identification for every person who will use the system. 
+
+ Software Requirements Specification for AU R-IMS Solution Page 12 
+ 
+   
+ 
+ 
+● The MIS system shall maintain a password for every unique user identification on the system. 
+● The MIS system shall allow a user three attempts to enter their user ID and password (and select the 
+domain, where appropriate) before that session is ended. 
+● When the user has failed to enter their user ID and password correctly, the MIS system shall only allow 
+the user three attempts to log in again after a system administrator has authorized it. 
+● The MIS system shall allow roles that allow people to read the database. 
+● The MIS system shall allow roles that allow people to add to the database. 
+● The MIS system shall allow roles that allow people to change the database. 
+● The MIS system shall allow roles that allow people to delete from the database. 
+● The MIS system shall allow for system administrator roles. 
+● The MIS system shall allow users to have multiple roles. 
+● The MIS system shall allow for system administrator roles. 
+● The MIS system shall allow for system monitoring roles. 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 13 
+ 
+   
+ 
+ 
+3 Specific Requirements: Functional Requirements (Use Cases)  
+ 
+Figure 3-1: Manufacturer User Case 
+ 
+Figure 3-2: Inspector Use Case 
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 14 
+ 
+   
+ 
+ 
+ 
+Figure 3-3: Importer User Case 
+ 
+Figure 3-4: Exporter Use Case 
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 15 
+ 
+   
+ 
+ 
+ 
+Figure 3-5: Assessor Use Case 
+ 
+Figure 3-6: Finance Use Case 
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 16 
+ 
+   
+ 
+ 
+ 
+Figure 3-7: General Public Use Case 
+ 
+ 
+ 
+ 
+Figure 3-8: System Administrator Use Case 
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 17 
+ 
+   
+ 
+ 
+3.1 Premise licenses 
+3.1.1 Premise license registration 
+Table 3-1: Functional Requirements for Use Case Premise License Registration 
+ID 1 
+Name Premise License Registration 
+Description The system shall allow Actors to submit new premise license registration 
+applications 
+Priority 1  
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+Inputs ● Premise Type 
+● Supervising Pharmacist 
+● Quality Control Pharmacist 
+● Authorization Letter from Sr. Pharmacist Attachment 
+● Product Category 
+● Product Classification 
+● Building Plan Attachments 
+● Distance. Nearest Pharmacist  
+● Premise License Duration 
+● Premise Directors 
+● Premise Staff  
+Flow of Events 
+   Basic Path 1. Open add Premise License Registration page 
+2. Choose Premise Type 
+3. Enter the required info  
+4. Attach the required documents 
+5. Enter premise information  
+6. Click add button  
+   Alternative Paths 
+ 
+ 
+Post-Conditions ● New application has been added 
+[Outputs] ● Invoice shall be printed and sent by email 
+● Application Verification Rejection Letter 
+● Suitability of Premise Rejection Letter 
+● Suitability of Premise License 
+● Premise License Registration Rejection Letter 
+● Premise License 
+[Constraint(s)] ● Must be able to complete in less than 2 s 
+Related Use Cases 
+   Used Use Cases Submit Premise License Registration use case 
+   Extending Use Cases Submit Premise License Registration extends from license application 
+submission use case 
+
+ Software Requirements Specification for AU R-IMS Solution Page 18 
+ 
+   
+ 
+ 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+3.1.2 Premise License Renewal 
+Table 3-2: Functional Requirements for Use Case Premise License Renewal 
+ID 2 
+Name Premise License Renewal 
+Description The system shall allow Actors to submit premise license renewal Application 
+Priority 1  
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+Inputs ● Previous License No 
+● Premise License Duration 
+Flow of Events 
+   Basic Path 1. Open add Premise License renewal application page. 
+2. Choose Premise Previous License No. 
+3. Enter premise license duration. 
+4. Click the add button. 
+   Alternative Paths 
+ 
+ 
+Post-Conditions ● New application has been added 
+[Outputs] ● Invoice shall be printed and sent by email 
+● Premise License 
+● Premise License Renewal Rejection Letter 
+ 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Premise License Renewal 
+   Extending Use Cases Premise license submissions 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 19 
+ 
+   
+ 
+ 
+3.1.3 Premise License Variation 
+Table 3-3: Functional Requirements for Use Case Premise License Variation 
+ID 3 
+Name Premise License Variation 
+Description The system shall allow Actors to submit premise license variation Application 
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+Inputs 
+● License No 
+● Supervising Pharmacist 
+● Quality Control Pharmacist 
+● Authorization Letter from Sr. Pharmacist Attachment 
+● Product Category 
+● Product Classification 
+● Building Plan Attachment 
+● Distance. Nearest Pharmacist  
+● Premise Directors 
+● Premise Staff 
+Flow of Events 
+   Basic Path 1. Open add premise license variation application page. 
+2. Enter premise data. 
+3. Attach required files. 
+4. Click the add button. 
+ 
+   Alternative Paths 
+ 
+ 
+Post-Conditions ● New application has been added 
+[Outputs] ● Invoice shall be printed and sent by email 
+● Premise License 
+● Premise License Variation Rejection Letter 
+[Constraint(s)] Must be able to complete in less than 50 ms 
+Related Use Cases 
+   Used Use Cases Premise license submissions 
+   Extending Use Cases  
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 20 
+ 
+   
+ 
+ 
+3.1.4 Premise Price Setup 
+Table 3-4: Functional Requirements for Use Case Premise Price Setup 
+ID 4 
+Name Premise Price Setup 
+Description The system shall allow Actors to submit premise price setup application 
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+Inputs 
+● Premise Category 
+● Registration Fee 
+● Duration 
+● Duration Type 
+Flow of Events 
+   Basic Path 1. Open premise price setup page. 
+2.Choose the premise category 
+3. Choose the process type: premise registration, premise renewal, premise 
+alteration. 
+4.Enter Process Type fee, 
+5. Enter Duration information. 
+6. Click the Save button. 
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs]  
+[Constraint(s)] Must be able to complete in less than 50 ms 
+Related Use Cases 
+   Used Use Cases Premise license submissions 
+   Extending Use Cases  
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 21 
+ 
+   
+ 
+ 
+3.1.5 Premise licensing period setup 
+Table 3-5: Functional Requirements for Use Case Premise Licensing Period Setup 
+ID 5 
+Name premise licensing period setup 
+Description The system shall allow Actors to licensing periods 
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions  
+Inputs 
+● Premise Category 
+● Duration 
+● Duration Type 
+Flow of Events 
+   Basic Path 1. Open premise licensing period setup page. 
+2.Choose the premise category 
+3. Enter Duration information. 
+4. Click the Save button. 
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] ● Suitability of Premise License 
+● Suitability of Premise Rejection Letter 
+● invoice 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Premise license submissions 
+   Extending Use Cases  
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 22 
+ 
+   
+ 
+ 
+3.1.6 Premise invoice expiry setup 
+Table 3-6: Functional Requirements for Use Case Premise Invoice Expiry Setup 
+ID 6 
+Name Premise Licensing Period Setup 
+Description The system shall allow Actors to setup premise licensing period  
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs 
+● Previous License No 
+● Premise License Duration 
+Flow of Events 
+   Basic Path  
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] Setup invoice expiry 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Premise license submissions 
+   Extending Use Cases No extended use cases 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 23 
+ 
+   
+ 
+ 
+3.2 Product licenses 
+3.2.1 Register New Product 
+3.2.1.1 Add Product details 
+Table 3-7: Functional Requirements for Use Case Add Product Details 
+ID 7 
+Name Add product details 
+Description The system shall allow Actors to register product licensing and adding product 
+details 
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs 
+● Application Number 
+● Date of submission of the dossier 
+● Product category 
+● Type of the medicinal product application 
+● Proprietary Name: 
+● International Nonproprietary Name (INN) of the Active Pharmaceutical 
+Ingredient (API): 
+● Strength of Active Pharmaceutical Ingredient (API) per unit dosage 
+form: 
+Flow of Events 
+   Basic Path 1. Open product licensing registration page. 
+2. Choose the product details tab. 
+3. Enter product information. 
+4. Click the Save button  
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] 1. Product details saved 
+2. Move to the next step 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Register new product 
+   Extending Use Cases 3.2.1 Register New Product 
+Related Screenshots 4.1.1 Add Product License registration 
+Source(s) Application for Registration of Medicinal Product (url: 
+https://Manufacturer.tmda.go.tz/publications/23) 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 24 
+ 
+   
+ 
+ 
+3.2.1.2 Add Applicant Info 
+Table 3-8: Functional Requirements for Use Case Add Applicant Info 
+ID 8 
+Name Add Applicant Info 
+Description The system shall allow Actors to register product licensing and applicant 
+information 
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs Applicant type 
+(Individual)  
+● Name 
+● physical address  
+● postal address 
+● Telephone: 
+● Telefax: 
+● E-Mail: 
+(Company) 
+● Name: 
+● Country:  
+● address 
+● Telephone: 
+● Telefax: 
+● E-Mail: 
+Flow of Events 
+   Basic Path ● Open product licensing registration page. 
+● Choose the Applicant Info tab. 
+● Enter applicant type: individual/company 
+● Enter the details of applicant info 
+● Click save 
+   Alternative Paths  
+Post-Conditions  
+[Outputs] ● Product Info saved 
+● Move to the next step 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Add applicant Info 
+   Extending Use Cases 3.2.1 Register New Product 
+Related Screenshots  Add Product License registration 
+Source(s) Application for Registration of Medicinal Product (url: 
+https://Manufacturer.tmda.go.tz/publications/23) 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 25 
+ 
+   
+ 
+ 
+3.2.1.3 Add Dosage Form 
+Table 3-9: Functional Requirements for Use Case Add Dosage Form 
+ID 9 
+Name Add Dosage Form 
+Description The system shall allow Actors to register product licensing and dosage form 
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs ● Package size 
+● Visual description 
+Flow of Events 
+   Basic Path ● Open product licensing registration page. 
+● Choose the Applicant Info tab. 
+● Enter applicant type: individual/company 
+● Enter the details of applicant info 
+● Click save 
+Alternative Paths  
+Post-Conditions  
+[Outputs] ● Product Info saved 
+● Move to the next step 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases No other use cases used 
+   Extending Use Cases 3.2.1 Register New Product 
+Related Screenshots  Add Product License registration 
+Source(s) Application for Registration of Medicinal Product (url: 
+https://Manufacturer.tmda.go.tz/publications/23) 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 26 
+ 
+   
+ 
+ 
+3.2.1.4 Add Shelf Life 
+Table 3-10: Functional Requirements for Use Case Product License Registration /Add Shelf Life 
+ID 10 
+Name Add shelf life 
+Description The system shall allow Actors to register product licensing and add shelf life 
+details 
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs ● Proposed shelf life (in months): 
+● Proposed shelf life (after reconstitution or dilution): 
+● Proposed shelf life (after first opening container): 
+● Proposed Storage Conditions 
+● Proposed storage conditions after first opening 
+● Other sister medicinal products registered or applied for registration  
+ 
+Flow of Events 
+   Basic Path ● Open product licensing registration page. 
+● Choose the shelf life tab. 
+● Enter shelf life inputs 
+● Click save 
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] ● Shelf life saved 
+● Move to the next step 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases No other use cases used 
+   Extending Use Cases Register new product 
+Related Screenshots  Add Product License registration 
+Source(s) Application for Registration of Medicinal Product (url: 
+https://Manufacturer.tmda.go.tz/publications/23) 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 27 
+ 
+   
+ 
+ 
+3.2.1.5 Add Marketing Authorization 
+Table 3-11: Functional Requirements for Use Case Product License Registration/Add Marketing Authorization 
+ID 11 
+Name Add Marketing Authorization 
+Description The system shall allow Actors to register product licensing and add Marketing 
+Authorization details 
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs ● Product Name 
+● Strength 
+● Marketing authorization number(s): 
+● Indication 
+● Is applied for Marketing Authorization of medicinal product containing 
+the same active substance 
+○ Yes 
+■ Product Name 
+■ Strength 
+■ Indication 
+■ pharmaceutical form 
+○ No 
+■ None 
+● Is Product Marketing Authorization in the country of origin registered? 
+○ Registered 
+■ Date of authorization 
+■ Proprietary name: 
+■ Authorization number: 
+○ Not registered 
+Explain the reason: 
+● Withdrawn 
+■ Date of withdrawal (dd-mm-
+Manufacturer): 
+■ Proprietary name:  
+■ Reason for withdrawal: 
+● Refused 
+■ Date of refusal 
+■ Country 
+
+ Software Requirements Specification for AU R-IMS Solution Page 28 
+ 
+   
+ 
+ 
+■ Reason for Refusal: 
+■ Suspended/revoked 
+■ Country 
+■ Date of suspension/revocation 
+■ Reason for suspension 
+Flow of Events 
+   Basic Path ● Open product licensing registration page. 
+● Choose the Marketing Authorization tab. 
+● Enter Authorization inputs 
+● Fill authorization answers 
+● Click save button 
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] ● Authorizations saved 
+● Move to the next step 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases No other use cases used 
+   Extending Use Cases 3.2.1 Register New Product 
+Related Screenshots  Add Product License registration 
+Source(s) Application for Registration of Medicinal Product (url: 
+https://Manufacturer.tmda.go.tz/publications/23) 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 29 
+ 
+   
+ 
+ 
+3.2.1.6 Add Manufacturers (FFP) 
+Table 3-12: Functional Requirements for Use Case Product License Registration/Add Manufactures 
+ID 12 
+Name Add Manufacturers (FFP) 
+Description The system shall allow Actors to register product licensing and add Marketing 
+Authorization details 
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs ● Name 
+● Company 
+● Address 
+● Country 
+● Telephone 
+● Telefax 
+● E-Mail 
+Flow of Events 
+   Basic Path ● Open product licensing registration page. 
+● Choose the Manufacturers (FFP) tab. 
+● Enter Manufacturers inputs 
+● Click save button 
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] ● Manufacturers (FFP) saved 
+● New record will be added 
+● Move to the next step 
+[Constraint(s)]  
+ 
+Related Use Cases 
+   Used Use Cases No other use cases used 
+   Extending Use Cases 3.2.1 Register New Product 
+Related Screenshots  Add Product License registration 
+Source(s) Application for Registration of Medicinal Product (url: 
+https://Manufacturer.tmda.go.tz/publications/23) 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 30 
+ 
+   
+ 
+ 
+3.2.1.7 Add Manufacturers (API) 
+Table 3-13: Functional Requirements for Use Case Product License Registration/ Add Manufactures 
+ID 13 
+Name Add Marketing Authorization 
+Description The system shall allow Actors to register product licensing and add Marketing 
+Authorization details 
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs ● Name 
+● Company 
+● Address 
+● Country 
+● Telephone 
+● Telefax 
+● E-Mail 
+Flow of Events 
+   Basic Path ● Open product licensing registration page. 
+● Choose the Manufacturers (API) tab. 
+● Enter Manufacturers inputs 
+● Click save button 
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] ● Manufacturers (API) saved 
+● New record will be added 
+● Move to the next step 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases No other use cases used 
+   Extending Use Cases 3.2.1 Register New Product 
+Related Screenshots  Add Product License registration 
+Source(s) Application for Registration of Medicinal Product (url: 
+https://Manufacturer.tmda.go.tz/publications/23) 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 31 
+ 
+   
+ 
+ 
+3.2.1.8 Add Brokers and suppliers 
+Table 3-14: Functional Requirements for Use Case Product License Registration/Add Brokers And Suppliers 
+ID 14 
+Name Add Brokers and suppliers 
+Description The system shall allow Actors to register product licensing and add Brokers and 
+suppliers’ details 
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs ● Name 
+● Company 
+● Address 
+● Country 
+● Telephone 
+● Telefax 
+● E-Mail 
+Flow of Events 
+   Basic Path ● Open product licensing registration page. 
+● Choose the Brokers/suppliers tab. 
+● Enter Brokers/suppliers inputs 
+● Click save button 
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] ● New record saved 
+● New record will be added 
+● Move to the next step 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases No other use cases used 
+   Extending Use Cases 3.2.1 Register New Product 
+Related Screenshots  
+Source(s) Application for Registration of Medicinal Product (url: 
+https://Manufacturer.tmda.go.tz/publications/23) 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 32 
+ 
+   
+ 
+ 
+3.2.1.9 Add Medicinal Product 
+ 
+Table 3-15: Functional Requirements for Use Case Product License Registration/Add Medicinal Product 
+ID 15 
+Name Add Medicinal Product 
+Description The system shall allow Actors to register product licensing and add Marketing 
+Authorization details 
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs ● Name of active ingredient(s) 
+● Quantity /dosage unit 
+● Unit of measure 
+● Reference/monograph standard 
+Flow of Events 
+   Basic Path ● Open product licensing registration page. 
+● Choose the medicinal product tab. 
+● Enter medicinal product inputs 
+● Click save button 
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs]  
+● New record will be added 
+● Move to the next step 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases No other use cases used 
+   Extending Use Cases 3.2.1 Register New Product 
+Related Screenshots  Add Product License registration 
+Source(s) Application for Registration of Medicinal Product (url: 
+https://Manufacturer.tmda.go.tz/publications/23) 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 33 
+ 
+   
+ 
+ 
+3.2.1.10 Add Contract Organization 
+ 
+Table 3-16: Functional Requirements for Use Case Product License Registration/Add Contract Organization 
+ID 16 
+Name Add Marketing Authorization 
+Description The system shall allow Actors to register product licensing and add Marketing 
+Authorization details 
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs ● Name 
+● Company 
+● Address 
+● Country 
+● Telephone 
+● Telefax 
+● E-Mail 
+Flow of Events 
+   Basic Path ● Open product licensing registration page. 
+● Choose the Manufacturers (API) tab. 
+● Enter Manufacturers inputs 
+● Click save button 
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] ● Contract Research Organization saved 
+● New record will be added 
+● Move to the next step 
+[Constraint(s)]  
+ 
+Related Use Cases 
+   Used Use Cases No other use cases used 
+   Extending Use Cases 3.2.1 Register New Product 
+Related Screenshots  Add Product License registration 
+Source(s) Application for Registration of Medicinal Product (url: 
+https://Manufacturer.tmda.go.tz/publications/23) 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 34 
+ 
+   
+ 
+ 
+3.2.2 Product license retention 
+Table 3-17: Functional Requirements for Use Case Product License Retention 
+ID 17 
+Name product license retention 
+Description The system shall allow Actors to retention product’s licensing  
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs ● Product License No 
+● Product Licensing Duration 
+Flow of Events 
+   Basic Path  
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] Product License Retention Rejection Letter 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Product license submissions 
+   Extending Use Cases No use case extended 
+Related Screenshots  
+Source(s) ● NDA IMS software design specification document 
+● EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 35 
+ 
+   
+ 
+ 
+3.2.3 Product License Variation 
+Table 3-18: Functional Requirements for Use Case Product License Variation 
+ID 18 
+Name Premise Licensing Period Setup 
+Description The system shall allow Actors to setup premise licensing period  
+Priority 1  
+Status Detailed Description 
+Actors System administrator 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs Product License No 
+Flow of Events 
+   Basic Path  
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] ● Product License Variation Rejection Letter 
+● Invoice  
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Product license variation 
+   Extending Use Cases No xtended use cases 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 36 
+ 
+   
+ 
+ 
+3.2.4 Product License Withdrawal 
+Table 3-19: Functional Requirements for Use Case Product License Withdrawal 
+ID 19 
+Name Product License Withdrawal 
+Description The system shall allow Actors to withdraw premise licensing  
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs 
+● Product License No 
+● Withdrawal Reason 
+● Related Attachments 
+Flow of Events 
+   Basic Path  
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] ● Product License Withdrawal Rejection Letter 
+● Product License Withdrawal Acceptance Letter 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Product license withdrawal 
+   Extending Use Cases No use cases extended 
+Related Screenshots  
+Source(s) ● NDA IMS software design specification document 
+● EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 37 
+ 
+   
+ 
+ 
+3.2.5 Product Clinical Trial 
+3.2.5.1 Add List of Submissions 
+Table 3-20: Functional Requirements for Use Case Product Clinical Trial/Add List of Submissions 
+ID 20 
+Name Add list of submissions 
+Description The system shall allow Actors to add list of submissions while adding product 
+clinical trial 
+Priority 1 
+Status Detailed Description 
+ 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs ● Covering letter 
+● Application Form 
+● General investigational plan 
+● Capacity building plans 
+● Overall Summary of th 
+● Signed and approved protocol 
+● Participant Information Leaflet (PIL), Informed Consent Forms (English 
+and Swahili versions) and any other information 
+● Declarations by Principal investigator, Co/Sub investigators and 
+Monitor(s) 
+● Joint declaration by Sponsor (or representative) and National Principal 
+Investigator 
+● Certified copy of insurance policy cover of study participants 
+● Ethical clearance certificate/copy of acknowledgement from NIMR 
+(Parallel submission) 
+● Curriculum vitae (CVs) of investigator(s) 
+● Blank Case Report Forms (CRFs) 
+● Serious Adverse Events reporting form to be used in the study 
+● Nonclinical Overall Summary (Hard copy and in MS Word) 
+● Clinical Study Reports 
+● Investigator’s Brochure (IB) 
+● Prescribing information sheets 
+● Quality Overall Summary – Chemical Entities (Hard copy and in MS 
+Word) 
+● Certificate of GMP for manufacture of the Investigational products 
+● Certificate of GMP manufacture of the Placebo/Comparator (if 
+applicable) 
+● Trial product Mockup labels and package Insert/s for other trial 
+medicines 
+● Letters of Access authorizing TFDA to Drug master Files, Site Reference 
+Files 
+
+ Software Requirements Specification for AU R-IMS Solution Page 38 
+ 
+   
+ 
+ 
+● Full, legible copies of key, peer-reviewed published articles supporting 
+the application 
+● Investigational Medicinal product dossier 
+● Chemistry, manufacturing and quality control data of active ingredient 
+and finished product/dosage form 
+● Pharmacology and toxicology data 
+Flow of Events 
+   Basic Path 1. Open product clinical trial page. 
+2. Choose list summations tab. 
+3. Select and upload available documents or files. 
+4. Click the Save button 
+   Alternative Paths 
+ 
+ 
+Post-Conditions List of submissions has been saved 
+[Outputs] Move to the next step 
+[Constraints(s)]  
+Related Use Cases 
+   Used Use Cases Product clinical trial application 
+   Extending Use Cases No use cases extended 
+Related Screenshots 4.1.3 Product clinical trial 
+Source(s) Application Form for a New Clinical Trial 
+(url:https://Manufacturer.tmda.go.tz/publications/28) 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 39 
+ 
+   
+ 
+ 
+3.2.5.2 Add Administrative Details 
+Table 3-21: Functional Requirements for Use Case Product Clinical Trial/Add Administrative Details 
+ID 21 
+Name Add Administrative Details 
+Description The system shall allow Actors to add administrative details while adding product 
+clinical trial 
+ 
+Priority 1 
+Status Detailed description 
+ 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs ● Title of the Study:  
+● Protocol Number/Identification: 
+● Version number  
+● Date of final protocol: 
+● Applicant: Sponsor: 
+● Local contact person: 
+● National principal investigator  
+● International principal investigator 
+● Monitor: Study coordinator: 
+Flow of Events 
+   Basic Path 1. Open product clinical trial page. 
+2. Choose add administrative tab. 
+3. Enter the required information. 
+4. Click the Save button 
+   Alternative Paths 
+ 
+ 
+Post-Conditions Administrative data should be saved 
+[Outputs] Move to the next step 
+[Constraints(s)]  
+Related Use Cases 
+   Used Use Cases Product clinical trial application 
+   Extending Use Cases  
+Related Screenshots 4.1.3 Product clinical trial 
+Source(s) Application Form for a New Clinical Trial 
+(URL:https://Manufacturer.tmda.go.tz/publications/28) 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 40 
+ 
+   
+ 
+ 
+3.2.5.3 Add Investigational Product 
+Table 3-22: Functional Requirements for Use Case Product Clinical Trial/Add Administrative Details/Add 
+Investigational Products 
+ID 22 
+Name Add investigational product 
+Description  
+Priority 1 
+Status Detailed description 
+ 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs ● Investigational Products 
+o Investigator product  
+o Description 
+o Is locally sourced 
+o Registration No.  
+o date of registration 
+● Comparator product 
+o comparator product  
+o Description 
+o Is locally sourced 
+o Registration No.  
+o date of registration 
+● Concomitant medication 
+o concomitant medication 
+o Description 
+o Is locally sourced 
+o Registration No.  
+o date of registration 
+● Other info 
+o Details of packaging 
+o storage conditions 
+o shelf-life of IMP 
+o Registration status of IMP 
+Flow of Events 
+   Basic Path 1. Open product clinical trial page. 
+2. Choose Investigation product tab. 
+3. Enter the required inputs. 
+4. Click the Save button 
+   Alternative Paths 
+ 
+ 
+Post-Conditions Investigational products will be saved 
+[Outputs] Move to the next step 
+[Constraints(s)]  
+
+ Software Requirements Specification for AU R-IMS Solution Page 41 
+ 
+   
+ 
+ 
+Related Use Cases 
+   Used Use Cases Product clinical trial application 
+   Extending Use Cases  
+Related Screenshots 4.1.3 Product clinical trial 
+Source(s) Application Form for a New Clinical Trial 
+(url:https://Manufacturer.tmda.go.tz/publications/28) 
+ 
+3.2.5.4 Add Investigators and trial sites 
+Table 3-23: Functional Requirements for Use Case Product Clinical Trial/ Add Investigators/Trial Sites 
+ID 23 
+Name Add Investigators and trial sites 
+Description  
+Priority 1 
+Status Detailed description 
+ 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs ● Investigators 
+o Personal info 
+▪ Name  
+▪ Address  
+▪ Tel 
+▪ Mobile  
+▪ Fax  
+▪ Email 
+o Current workload of investigator 
+▪ Number of studies currently undertaken by investigators as 
+principal 
+▪ Total number of patients represented by these study 
+▪ Time-commitments of researcher 
+● Details of Trial Site 
+o General Info 
+▪ Name of site 
+▪ physical address 
+▪ Phone 
+▪ contact person 
+▪ Mobile 
+ 
+o Capacity of Trial Site 
+▪ Number of staffs  
+▪ Site facilities 
+▪  emergency facility 
+▪ other relevant infrastructure 
+
+ Software Requirements Specification for AU R-IMS Solution Page 42 
+ 
+   
+ 
+ 
+Flow of Events 
+   Basic Path 5. Open product clinical trial page. 
+6. Choose Investigation product tab. 
+7. Enter the required inputs. 
+8. Click the Save button 
+   Alternative Paths 
+ 
+ 
+Post-Conditions Investigational products will be saved 
+[Outputs] Move to the next step 
+[Constraints(s)]  
+Related Use Cases 
+   Used Use Cases Product clinical trial application 
+   Extending Use Cases  
+Related Screenshots 4.1.3 Product clinical trial 
+Source(s) Application Form for a New Clinical Trial 
+(url:https://Manufacturer.tmda.go.tz/publications/28) 
+ 
+3.2.5.5 Add other details 
+Table 3-24: Functional Requirements for Use Case Product Clinical Trial/ Add Other Details 
+ID 24 
+Name Add other details 
+Description  
+Priority 1 
+Status Detailed description 
+ 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs 
+● Study participants 
+o number of local participants 
+o Total number of participants worldwide 
+o Total enrolment in each local site/center 
+o Volunteer base from which local participants will be drawn 
+o Retrospective data 
+● Other details 
+o Provide an explanation if the trial is to be conducted locally 
+only and not in the host country of the applicant / sponsor: 
+o Define Reg. Authorities which have: 
+▪ Submitted, approval has not yet been granted 
+● RA Name 
+● date of submission 
+▪ approved this trial 
+● RA Name 
+
+ Software Requirements Specification for AU R-IMS Solution Page 43 
+ 
+   
+ 
+ 
+● date of approval 
+▪ have rejected this trial 
+● RA Name 
+● reasons for the rejection 
+ 
+▪ suspended at any stage 
+● RA Name 
+● Details of and reasons 
+Flow of Events 
+   Basic Path 1. Open product clinical trial page. 
+2. Choose other details tab. 
+3. Enter the required inputs. 
+4. Click the Save button 
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] Other details data will be saved 
+[Constraints(s)]  
+Related Use Cases 
+   Used Use Cases Product clinical trial application 
+   Extending Use Cases  
+Related Screenshots 4.1.3 Product clinical trial 
+Source(s) Application Form for a New Clinical Trial (url: 
+https://Manufacturer.tmda.go.tz/publications/28) 
+ 
+3.2.5.6 Add Ethics documents 
+Table 3-25: Functional Requirements for Use Case Product Clinical Trial/Add Ethics Documents 
+ID 25 
+Name Product Survey 
+Description  
+Priority 1 
+Status Detailed description 
+ 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs 
+● Ethics Committee responsible for each site, date of approval or date of 
+application: 
+● Attach copy of response(s) positive or negative made by, and/or conditions 
+required by Ethics Committee(s) if available] 
+● Details of capacity building component of the trial, if any: 
+
+ Software Requirements Specification for AU R-IMS Solution Page 44 
+ 
+   
+ 
+ 
+● Details of ICH-GCP training of investigators, monitors, study co-coordinators 
+in terms of conducting this trial: 
+● Detailed monitoring plan for each site: Attach as an Annex if necessary 
+● Details of trial insurance: e.g. insurer, policy holder, policy number, 
+insurance cover, period of validity 
+● Details of possible conflict of interest of any person(s)/organization(s) 
+who/which will be involved in the trial 
+● Remuneration/compensation to be received by investigators, trial 
+participants or others 
+Flow of Events 
+   Basic Path 1. Open product clinical trial page. 
+2. Choose Ethics tab. 
+3. Enter the required inputs. 
+4. Click the Save button 
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] Other details will be saved 
+[Constraints(s)]  
+Related Use Cases 
+   Used Use Cases Product clinical trial 
+   Extending Use Cases No use cases extended 
+Related Screenshots 4.1.3 Product clinical trial 
+Source(s) Application Form for a New Clinical Trial 
+(url:https://Manufacturer.tmda.go.tz/publications/28) 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 45 
+ 
+   
+ 
+ 
+3.2.6 Product Survey 
+Table 3-26: Functional Requirements for Use Case Product Survey 
+ID 26 
+Name Product Survey 
+Description  
+Priority 1 
+Status Incomplete Parts 
+ 
+Actors Manufacturer 
+ 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs 
+ 
+Flow of Events 
+   Basic Path  
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs]  
+[Constraints(s)]  
+Related Use Cases 
+   Used Use Cases Product surey 
+   Extending Use Cases No extended use cases 
+Related Screenshots  
+Source(s) No source available 
+3.2.7 Product Promotion 
+Table 3-27: Functional Requirements for Use Case Product Promotion 
+ID 27 
+Name Product Promotion 
+Description  
+Priority 1 
+Status Detailed Description 
+Actors Manufacturer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs ● Applicant Particulars 
+o Name of applicant: 
+o Address 
+o contact Person 
+
+ Software Requirements Specification for AU R-IMS Solution Page 46 
+ 
+   
+ 
+ 
+o E-mail 
+o Tel 
+o Fax 
+ 
+● Sponsor Particulars 
+o Name of Sponsor 
+o Address 
+o Contact person: 
+o E-mail 
+o Tel 
+o Fax 
+ 
+● Product Particulars 
+o Distribution category 
+o Product Name/s 
+o Registration number 
+o Name of registration holder 
+o Active ingredient(s) and strengths of the product 
+ 
+● Attachments 
+o A copy of the proposed advert 
+o Current indications of use as indicated on Certificate of 
+Registration (where applicable). 
+o Copy of any research/surveys/data mentioned in 
+advertisement 
+o Copy of previous approval (If the advert is a reminder) 
+o Current indications of use as indicated on Certificate of 
+Registration (where applicable). 
+o Application fee. 
+Flow of Events 
+   Basic Path 1. Open product promotion page. 
+2. Enter the required inputs. 
+3. Click the Save button 
+   Alternative Paths 
+ 
+ 
+Post-Conditions Product promotion submitted 
+[Outputs] ● Product Promotion License 
+● Product Promotion Rejection Letter 
+[Constraints(s)]  
+Related Use Cases 
+   Used Use Cases License application submissions 
+   Extending Use Cases No extended use cases 
+Related Screenshots 4.1.2 Product promotion 
+Source(s) Application Form for Approval of Promotional Materials (url: 
+https://Manufacturer.tmda.go.tz/publications/23) 
+ 
+
+ Software Requirements Specification for AU R-IMS Solution Page 47 
+ 
+   
+ 
+ 
+3.2.8 Product Price Setup 
+Table 3-28: Functional Requirements for Use Case Product Price Setup 
+ID 28 
+Name Product Price Setup 
+Description  
+Priority 1 
+Status  
+Actors System administrator 
+Pre-Conditions  
+Inputs 
+● Product Category 
+● Registration Fee 
+● Duration 
+● Duration Type 
+Flow of Events 
+   Basic Path  
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] Setup product price 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Product Price Setup 
+   Extending Use Cases No use cases extended 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+ 
+ 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 48 
+ 
+   
+ 
+ 
+3.2.9 Product Licensing Period Setup 
+Table 3-29: Functional Requirements for Use Case Product Licensing Period Setup 
+ID 29 
+Name Product Licensing Period Setup 
+Description  
+Priority 1  
+Status Detailed Description 
+Actors System administrator 
+Pre-Conditions  
+Inputs 
+● Product Category 
+● Duration 
+● Duration Type 
+Flow of Events 
+   Basic Path  
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] ● Setup product license period 
+● invoice 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Product Licensing Period Setup 
+   Extending Use Cases No extended use cases 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 49 
+ 
+   
+ 
+ 
+3.2.10 Product Invoice Expiry Setup 
+Table 3-30: Functional Requirements for Use Case Product Invoice Expiry Setup 
+ID 30 
+Name Product Invoice Expiry Setup 
+Description  
+Priority 1 
+Status Detailed Description 
+Actors System administrator 
+Pre-Conditions  
+Inputs 
+● Product Category 
+● Duration 
+● Duration Type 
+Flow of Events 
+   Basic Path  
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs]  
+[Constraint(s)] Setup Invoice Expiry 
+Related Use Cases 
+   Used Use Cases No other use cases used 
+   Extending Use Cases No use cases extended 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 50 
+ 
+   
+ 
+ 
+3.3 Import and Export  
+3.3.1 Permit Import/Export 
+3.3.1.1 Import Permit Registration 
+Table 3-31: Functional Requirements for Use Case Import Permit Registration 
+ID 31 
+Name Import Permit Registration 
+Description  
+Priority 1 
+Status  
+Actors Importer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs 
+● Premise License No 
+● Product Category 
+● Import Reason 
+● Country of Origin 
+● Import Invoice Particulars 
+● Import Attachments 
+Flow of Events 
+   Basic Path  
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] ● Import Permit 
+Import Permit Rejection Letter 
+● Invoice  
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Import permit registration 
+   Extending Use Cases No extended use cases 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document  
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 51 
+ 
+   
+ 
+ 
+3.3.1.2 Export Permit Registration 
+  
+Table 3-32: Functional Requirements for Use Case Export Permit Registration 
+ID 18 
+Name Export Permit Registration 
+Description  
+Priority 1 
+Status  
+Actors Exporter 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs 
+● Premise License No 
+● Product Category 
+● Export Reason 
+● Country of Export 
+● Export Invoice Particulars 
+● Export Attachments 
+Flow of Events 
+   Basic Path  
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] Export Permit 
+Export Permit Rejection Letter 
+Invoice  
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Export permit registration 
+   Extending Use Cases No use case extended 
+Related Screenshots  
+Source(s) 1 NDA IMS software design specification document 
+2 EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 52 
+ 
+   
+ 
+ 
+3.3.2 License Import/Export 
+3.3.2.1 Import License Registration 
+Table 3-33: Functional Requirements for Use Case Import License Registration 
+ID 32 
+Name Import/Export License Registration 
+Description  
+Priority 1 
+Status Detailed Description 
+Actors Importer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs 
+● Premise License No 
+● Product Category 
+● License Duration 
+ 
+Flow of Events 
+   Basic Path  
+   Alternative Paths 
+ 
+ 
+Post-Conditions ● Things that are true after the use case ends 
+[Outputs] ● Import license registration 
+● Import License Registration Rejection Letter 
+● Invoice  
+[Constraint(s)] Must be able to complete in less than 50 ms 
+Related Use Cases 
+   Used Use Cases Import license registration 
+   Extending Use Cases No extended use cases 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document  
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 53 
+ 
+   
+ 
+ 
+3.3.2.2 Export License Registration 
+  
+Table 3-34: Functional Requirements for Use Case Import/Export License Renewal 
+ID 20 
+Name Export License Registration 
+Description  
+Priority 1 
+Status Detailed Description 
+Actors Exporter 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission  
+Inputs 
+● Previous License No 
+● License Duration 
+Flow of Events 
+   Basic Path  
+ 
+   Alternative Paths 
+ 
+ 
+ 
+Post-Conditions  
+[Outputs] ● Export License 
+● Export License Registration Rejection Letter 
+● Invoice 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Export license registration 
+   Extending Use Cases No use cases extended 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document  
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 54 
+ 
+   
+ 
+ 
+3.3.2.3 Import License Renewal 
+ 
+Table 3-35: Functional Requirements for Use Case Import License Renewal 
+ID 21 
+Name Import License Renewal 
+Description  
+Priority 1 
+Status Detailed Description 
+Actors Importer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission 
+ 
+Inputs 
+● Previous License No 
+● License Duration 
+Flow of Events 
+   Basic Path  
+ 
+   Alternative Paths 
+ 
+ 
+ 
+Post-Conditions  
+[Outputs] ● Import License Registration Renewal Letter 
+● Invoice 
+● Import License Registration renewal 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Import license renewal 
+   Extending Use Cases        No extended use case 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 55 
+ 
+   
+ 
+ 
+3.3.2.4 Export License Renewal 
+  
+Table 3-36: Functional Requirements for Use Case Import/Export License Renewal 
+ID 22 
+Name Export License Renewal 
+Description  
+Priority 1 
+Status Detailed Description 
+Actors Exporter 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor is not logged in 
+● Actor has permission 
+ 
+Inputs 
+● Previous License No 
+● License Duration 
+Flow of Events 
+   Basic Path  
+ 
+   Alternative Paths 
+ 
+ 
+ 
+Post-Conditions  
+[Outputs] Export License 
+Export License renewal rejection Letter 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Export License Renewal 
+   Extending Use Cases No use cases extended 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 56 
+ 
+   
+ 
+ 
+3.3.3 Import/Export Price Setup 
+3.3.3.1 Import Price Setup 
+Table 3-37: Functional Requirements for Use Case Price Setup 
+ID 33 
+Name Import Price Setup 
+Description  
+Priority 1 
+Status Detailed Description 
+Actors Importer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor has permission 
+Inputs 
+● Permit Type 
+● Invoice Value Percent 
+● Product Category 
+● Standard Fee 
+Flow of Events 
+   Basic Path  
+ 
+   Alternative Paths 
+ 
+ 
+ 
+Post-Conditions  
+[Outputs] Import Setup price 
+ 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Import Price Setup 
+   Extending Use Cases No extended use cases 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 57 
+ 
+   
+ 
+ 
+3.3.4 Licensing Period Setup 
+3.3.4.1 Import Licensing Period  
+Table 3-38: Functional Requirements for Use Case Import and Export Licensing Period Setup 
+ID 34 
+Name Import Licensing Period  
+Description  
+Priority 1  
+Status Detailed Description 
+Actors Importer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor has permission 
+ 
+Inputs 
+● License Type 
+● Duration 
+● Duration Type 
+Flow of Events 
+   Basic Path  
+ 
+   Alternative Paths 
+ 
+ 
+ 
+Post-Conditions  
+[Outputs] 
+Licensing period has been imported 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Import and Export Licensing Period 
+   Extending Use Cases No use cases extended 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 58 
+ 
+   
+ 
+ 
+3.3.4.2 Export Licensing Period  
+Table 3-39: Functional Requirements for Use Case Import and Export Licensing Period Setup 
+ID 25 
+Name  Export Licensing Period  
+Description  
+Priority 1  
+Status Detailed Description 
+Actors Exporter 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor has permission 
+Inputs 
+● License Type 
+● Duration 
+● Duration Type 
+Flow of Events 
+   Basic Path  
+ 
+   Alternative Paths 
+ 
+ 
+ 
+Post-Conditions  
+[Outputs]  
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Export Licensing Period 
+   Extending Use Cases No use cases extended 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 59 
+ 
+   
+ 
+ 
+3.3.5 Invoice Expiry Setup 
+3.3.5.1 Import Invoice Expiry Setup 
+Table 3-40: Functional Requirements for Use Case Import and Export Invoice Expiry Setup 
+ID 35 
+Name Import and Export Invoice Expiry Setup 
+Description  
+Priority 1  
+Status Detailed Description 
+Actors Importer 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor has permission 
+Inputs 
+● Invoice Type 
+● Duration 
+● Duration Type 
+Flow of Events 
+   Basic Path  
+ 
+   Alternative Paths 
+ 
+ 
+ 
+Post-Conditions  
+[Outputs] Setup Invoice Expiry 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Application submissions 
+   Extending Use Cases No extended use cases 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 60 
+ 
+   
+ 
+ 
+3.3.5.2 Export Invoice Expiry Setup 
+Table 3-41: Functional Requirements for Use Case Import and Export Invoice Expiry Setup 
+ID 27 
+Name Import and Export Invoice Expiry Setup 
+Description  
+Priority 1  
+Status Detailed Description 
+Actors Exporter 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor has permission 
+Inputs 
+● Invoice Type 
+● Duration 
+● Duration Type 
+Flow of Events 
+   Basic Path  
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs]  
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Application submissions 
+   Extending Use Cases No extended use cases 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 61 
+ 
+   
+ 
+ 
+3.4 Document Library  
+3.4.1 Inputs/Output document 
+3.4.1.1 Add new document 
+Table 3-42: Functional Requirements for Use Case Add New Document 
+ID 36 
+Name Add new document 
+Description  
+Priority 1  
+Status Detailed Description 
+Actors System administrator 
+Pre-Conditions ● Actor has been enrolled in the MIS system.  
+● Actor has permission 
+Inputs 
+● Date created 
+● Created By 
+● Document Owner  
+● Document Type  
+● Document Reference No 
+● Document Name 
+● Document Description 
+Flow of Events 
+   Basic Path  
+   Alternative Paths 
+ 
+ 
+Post-Conditions  
+[Outputs] New document saved 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Application submissions 
+   Extending Use Cases No extended use cases 
+Related Screenshots  
+Source(s) • NDA IMS software design specification document 
+• EAC IMS NMRA System Requirements 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 62 
+ 
+   
+ 
+ 
+3.5 System administration 
+3.5.1 Manage users 
+3.5.1.1 Add New User 
+ 
+Table 3-43: Functional Requirement for Use case Add New User 
+ID 37 
+Name Add new user 
+Description System shall allow administrator to add new user 
+Priority 1 
+Status Detailed Description 
+Actors system administrator 
+Pre-Conditions User has privilege to add new user 
+Inputs 
+1. Full Name 
+2. email 
+3. phone 
+4. Mobile 
+5. Mobile2 
+6. Image 
+7. Username 
+8. password 
+Flow of Events 
+   Basic Path 1. Open add user page 
+2. Enter user information 
+3. Enter username 
+4. Enter user password 
+5. Confirm user password 
+6. Click Add button 
+   Alternative Paths 
+ 
+ 
+Post-Conditions - New user has account to the system and can sign in to access system 
+[Outputs] -New user has been added 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Manage users 
+   Extending Use Cases No extended use cases 
+Related Screenshots  
+Source(s) General use case 
+ 
+ 
+ 
+
+ Software Requirements Specification for AU R-IMS Solution Page 63 
+ 
+   
+ 
+ 
+3.5.1.2 Display users 
+  
+Table 3-44: Functional Requirement for Use Case Display Users 
+ID 38 
+Name Display users 
+Description System shall allow administrator to display users 
+Priority 1 
+Status Detailed Description 
+Actors System administrator 
+Pre-Conditions User has privilege to display users 
+Inputs 
+No inputs 
+Flow of Events 
+   Basic Path 1. Open Display user’s page 
+2. System shall display users’ basic information 
+   Alternative Paths  
+Post-Conditions -System shall display users list 
+[Outputs] -New user has been added 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Manage users 
+   Extending Use Cases No extended use cases 
+Related Screenshots  
+Source(s) General use case 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 64 
+ 
+   
+ 
+ 
+3.5.1.3 Manage User Permissions 
+ 
+ 
+Table 3-45: Functional Requirement for Use Case Manage Users’ Permissions 
+ID 39 
+Name Manage user permission 
+Description The system shall allow administrator to manage user permission, User cannot 
+access pages or actions he don’t has permission on it 
+Priority 1 
+Status Detailed Description 
+Actors System administrator 
+Pre-Conditions User has privilege to display users 
+Inputs 
+No inputs 
+Flow of Events 
+   Basic Path 1. Display all users 
+2. Click manage permission button for specific user 
+3. System open manage user permission page 
+4. Actor can change user role 
+5. User can check or uncheck permissions 
+6. Click Save button 
+   Alternative Paths  
+Post-Conditions -The user permission has been changed 
+[Outputs] -user permission has been changed 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Manage users 
+   Extending Use Cases No extended use case 
+Related Screenshots  
+Source(s) General use case 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 65 
+ 
+   
+ 
+ 
+3.5.2 Manage Authentication 
+3.5.2.1 Add New Role 
+ 
+Table 3-46: Functional Requirements for Use Case Add New Role 
+ID 40 
+Name Add New Role 
+Description System shall allow administrator to add new role 
+Priority 1 
+Status Detailed Description 
+Actors System administrator 
+Pre-Conditions User has privilege to add new role 
+Inputs ● role name 
+● role permissions 
+Flow of Events 
+   Basic Path 1. Open add role page 
+2. Enter role name 
+3. Select role permissions 
+4. Click Add button 
+   Alternative Paths  
+Post-Conditions  
+[Outputs] New role added 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Manage Authentication 
+   Extending Use Cases No extended use case 
+Related Screenshots  
+Source(s) General use case 
+ 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 66 
+ 
+   
+ 
+ 
+3.5.2.2 Display Roles 
+Table 3-47: Functional Requirements for Use Case Display Roles 
+ID 39 
+Name Display Roles 
+Description  
+Priority 1 
+Status Detailed Description 
+Actors System administrator 
+Pre-Conditions User has privilege to add new role 
+Inputs ● role name 
+● role permissions 
+Flow of Events 
+   Basic Path 1. Open add role page 
+2. Enter role name 
+3. Select role permissions 
+4. Click Add button 
+   Alternative Paths  
+Post-Conditions System shall display all users in a role 
+[Outputs] display all users in a role 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Manage authentication 
+   Extending Use Cases No uses cases extended 
+Related Screenshots  
+Source(s) General use case 
+ 
+
+ Software Requirements Specification for AU R-IMS Solution Page 67 
+ 
+   
+ 
+ 
+3.5.2.3 . Edit Role Permissions 
+Table 3-48: Functional Requirement for Edit Role Permission Use Case 
+ID 42 
+Name Edit Role permission 
+Description The system shall allow administrator to edit role permission 
+Priority 1 
+Status Detailed Description 
+Actors system administrator 
+Pre-Conditions User has privilege to manage user permission 
+Inputs ● Check or uncheck permissions 
+Flow of Events 
+   Basic Path 1. Display all users 
+2. Click manage permission button for specific user 
+3. System open manage user permission page 
+4. User can check or uncheck permissions 
+5. Click Save button 
+6. System will update users' permissions in this role according to updating 
+permissions 
+   Alternative Paths 
+ 
+ 
+Post-Conditions The user permission has been changed 
+[Outputs] The user permission has been changed 
+[Constraint(s)]  
+Related Use Cases 
+   Used Use Cases Manage authentication 
+   Extending Use Cases  
+Related Screenshots  
+Source(s) General use case 
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 68 
+ 
+   
+ 
+ 
+4 External Interface Requirements 
+4.1 User Interfaces 
+4.1.1 Add Product License registration 
+ 
+Figure 4-1: Product Licensing Registration/Add Product Details 
+ 
+Figure 4-2: Product Licensing Registration/Add Product Details/Add Applicant Info 
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 69 
+ 
+   
+ 
+ 
+ 
+Figure 4-3: Product Licensing Registration/Add Product Details 
+ 
+ 
+Figure 4-4: Product Licensing Registration/Add Shelf Life  
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 70 
+ 
+   
+ 
+ 
+ 
+Figure 4-5: Product Licensing Registration/Add Marketing Authorization Details  
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 71 
+ 
+   
+ 
+ 
+ 
+Figure 4-6: Product Licensing Registration/Add Manufacturers (FPP) 
+ 
+Figure 4-7: Product Licensing Registration/Add Manufacturers (API)  
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 72 
+ 
+   
+ 
+ 
+ 
+ 
+Figure 4-8: Product Licensing Registration/Add Brokers and Suppliers 
+ 
+ 
+ 
+ 
+ 
+Figure 4-9: Product Licensing Registration/Add Medicinal Product  
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 73 
+ 
+   
+ 
+ 
+ 
+Figure 4-10: Product Licensing Registration/Add Contract Organization 
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 74 
+ 
+   
+ 
+ 
+4.1.2 Product promotion 
+ 
+Figure 4-11: Product Promotion 
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 75 
+ 
+   
+ 
+ 
+4.1.3 Product clinical trial 
+ 
+Figure 4-12: Product Clinical Trial Introduction 
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 76 
+ 
+   
+ 
+ 
+ 
+Figure 4-13: Product Clinical Trial/Add List of Submissions 
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 77 
+ 
+   
+ 
+ 
+ 
+Figure 4-14: Product Clinical Trial/Investigational Products 
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 78 
+ 
+   
+ 
+ 
+ 
+ 
+Figure 4-15: Product Clinic Trial/Add Administrative Details 
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 79 
+ 
+   
+ 
+ 
+ 
+Figure 4-16: Product Clinical Trial/Add Ethics Document 
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 80 
+ 
+   
+ 
+ 
+ 
+Figure 4-17: Product Clinical Trial/Other Details 
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 81 
+ 
+   
+ 
+ 
+ 
+Figure 4-18: Product Clinical Trial/Add Investigators and Trial Sites  
+
+
+ Software Requirements Specification for AU R-IMS Solution Page 82 
+ 
+   
+ 
+ 
+4.2 Hardware Interfaces 
+This section outlines the minimum recommended server specifications to be used for hosting the IMS. If the 
+Partner NMRA is capable of installing superior specifications, they should do so. The specifications outlined 
+below have taken into account ability of IMS hardware resources to handle increasing usage and traffic to a 
+minimum lifespan of 10 years. 
+The specifications have taken also into account the following  
+● Ability to of hardware and OS to handle growing traffic i.e. if IMS installation is scaled 
+● Adequate hardware resources to support failover environment 
+ 
+ 
+Table 4-1: Hardware Specifications 
+No Server Name Usage Description Specifications 
+1 Primary 
+Application Server 
+Host the NMRA Online Portal and 
+NMRA MIS 
+Minimum 16GB RAM, x64 processor, 
+2.0GHZ, 4 CPU/Cores 
+2 Secondary 
+Application Server 
+Supporting the Primary Application 
+Server to support failover (clustering) 
+ 
+Optional NMRA MIS can be hosted 
+here 
+Minimum 16GB RAM, x64 processor, 
+2.0GHZ, 4 CPU/Cores 
+3 Primary Database 
+Server 
+Host the IMS Master Database Server Minimum 32GB RAM, x64 processor, 
+2.0GHZ, 8 CPU/Cores, 1TB Hard Drive 
+4 Secondary 
+Database Server 
+Host the Slave Database Server and 
+Database Backups 
+Minimum 32GB RAM, x64 processor, 
+2.0GHZ, 8 CPU/Cores, 1TB Hard Drive 
+5 UPS Uninterruptible Power Supply Unit Minimum 5kVa, Rack Mountable UPS, 
+Quantity 2 
+ 
+4.3 Software Interfaces 
+ 
+Table 4-2: Software Interfaces 
+No Software Specifications 
+1 Operating System Recommended Enterprise Linux Editions E.g. Red Hat, SUSE Or Unix 
+2 Antivirus Linux Antivirus  
+ 
+ 
+ 
+4.4 Communications Interfaces 
+The NMRA information, functions and processes are of critical importance to enable achieve high standards 
+of public safety. As such the environment where IMS shall be hosted and accessed is of critical importance. 
+ 
+
+ Software Requirements Specification for AU R-IMS Solution Page 83 
+ 
+   
+ 
+ 
+The section below shall outline the network, internet and security requirements of IMS  
+● The NMRA shall have a Local Area Net work (LAN) where NMRA MIS can be locally accessed with the 
+premises 
+● NMRA MIS shall only accessed via a secure protocol HTTPS  
+● For regional NMRA offices, the NMRA shall have Wide Area Network or optionally provide a secure 
+channel for NMRA MIS e.g. VPN 
+● NMRA Online Portal shall only be accessed via a secure protocol HTTPS over the public network 
+● The NMRA must provide secondary internet link with their ISP to ensure service delivery on the Online 
+Portal 
+● The minimal internet bandwidth speeds must not be below 4MBS 
+5 Other Nonfunctional Requirements 
+5.1 Performance Requirements 
+● The MIS Search Function shall return the results within 4 seconds, 80% of the time. 
+● The MIS Search Function shall have a maximum of 500 records. 
+● The MIS Search Function shall have 40 average concurrent users.  
+ 
+5.2 Safety Requirements 
+● The MIS Weekly Backup shall be completed between 11 p.m. starting on Friday night and 6 a.m. on 
+Monday.  
+5.3 Security Requirements 
+● The system shall embed security measures to ensure that the records present in the system are secure 
+and no unauthorized personnel can access them.  
+● The application should protect user data by using username and password for login. 
+● The application should allow only the authorized people to access the application   
+● The domain will get an SSL Certificate that protects the domain to be  published by hackers and get it 
+to some secure level.  
+● on the database level security, the system will encrypt the password of each user and determine the 
+user who has access to the database.  
+5.4 Software Quality Attributes 
+5.4.1 Availability  
+The MIS shall protect against denial of service (DOS).      
+5.4.2 Reliability 
+●  The MIS will be available all the time, and there are no pages' crashes and freezes, and if an 
+unexpected error there is an error page will appear and the reason will register on the error log and 
+the correction will be provided.  
+
+ Software Requirements Specification for AU R-IMS Solution Page 84 
+ 
+   
+ 
+ 
+●  The MIS system shall be  available 99.99% of the time. A failure of the MIS system shall occur when 
+any of the following critical functions are not working: 
+●  Security access to the system   
+5.4.3 Efficiency  
+ The MIS Hosting System shall be hosted on cloud.   
+ 
+5.4.4 Effectiveness 
+The MIS process of every function must be in a separate page, so that the user can do the function directly not 
+through many pages.     
+ 
+ The MIS System Operating System shall operate 100% of records submitted.  
+  
+5.4.5  Fault Tolerance 
+The MIS shall have all functions imp lemented as services within a service‐oriented architecture to allow the 
+system to operate in the event of one or more services failing.  
+ The system must have Error handling features.  
+5.4.6  Privacy 
+MIS shall protect the privacy of individuals identified in a record in accordance with Federal Government 
+Privacy policies.       
+5.4.7 Data Integrity  
+To prevent malicious corruption of the MIS, the system shall retain its data for 90 days after a designated user 
+authorizes deletion of a record.  
+The MIS shall maintain data integrity by keeping backups of all updates to the database for every record 
+transaction.  
+ 
+  
+
+ Software Requirements Specification for AU R-IMS Solution Page 85 
+ 
+   
+ 
+ 
+6 Other Requirements 
+ 
+Appendix A: Glossary 
+<Define all the terms necessary to properly interpret the SRS, including acronyms and abbreviations. You may 
+wish to build a separate glossary that spans multiple projects or the entire organization, and just include terms 
+specific to a single project in each SRS.> 
+<The following is a list of definitions, acronyms and abbreviations that will help you better understand the 
+document.> 
+6.1.1 Definitions 
+Table 6-1: Definitions 
+  
+  
+6.1.2 Abbreviations 
+Table 6-2: Abbreviations 
+DB Database 
+DBMS  Database Management System          
+DLFS  Document Library File Storage 
+EAC  East Africa Community 
+GUI Graphical User Interface 
+HTML Hypertext Markup Language 
+IMS  Information Management System 
+NMRA  National Medicine Regulatory Authority 
+SRD Software Requirements Document 
+SRS Software Requirements Specifications 
+6.1.3 Acronyms 
+Table 6-3 Acronyms 
+s/he he/she 
+  
+ 
+ 

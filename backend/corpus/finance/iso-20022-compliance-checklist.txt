@@ -1,0 +1,255 @@
+ 
+Source: ISO 20022 Registration Authority   Last update date: 12th June 2023  
+ 
+ISO 20022 implementation compliance checklist 
+Introduction 
+The ISO 20022 Registration Authority (RA) is often questioned about how to ensure compliance with 
+the ISO 20022 standard and whether there is a possibility for an implementation to get certified as 
+ISO 20022 compliant, as is possible for other standards such as ISO 9000.  
+There is no official certification authority for ISO 20022, and the implementation of ISO 20022 
+message definitions will depend a lot on the specific requirements of the community that is 
+implementing, that is, the ‘community of users’. 
+The aim of this document is to give guidance to implementers about some key aspects to be 
+considered in order to be as compliant as possible with the standard. As the name indicates, it is a 
+checklist that can be used by implementers, adopters (consultants, tool providers, service providers, 
+etc.), and consumers of ISO 20022 messages to tick whether they have considered each of the key 
+aspects related to ISO 20022 compliance. 
+This checklist relies on a strict list of compliance rules, defined by the ISO 20022 Technical Support 
+Group (TSG), which is included in the Appendix. 
+  
+
+ 
+Source: ISO 20022 Registration Authority   Last update date: 12th June 2023  
+ 
+Checklist 
+1. Use of official ISO 20022 Message Definitions 
+The first requirement is obviously to base the implementation on the official ISO 20022 
+Message Definitions that are registered and published by the ISO 20022 Registration 
+Authority in the Catalogue of Messages on the iso20022.org website. ISO 20022 Message 
+Definitions usually permit a wide range of different implementations. The community of 
+users will need to select an implementation that complies with the Message Definition (see 
+item 3 below), while best addressing their specific needs.  
+• It is worth mentioning that, if some requirements cannot be addressed by a 
+Message Definition, there is a possibility, for any interested party, to introduce a 
+request to adapt the Message Definition to address a specific requirement (see ISO 
+20022 Maintenance Process).  
+• For the benefit of users that are participating in many ISO 20022 communities, it is 
+important to ensure some consistency between implementations of the same ISO 
+20022 Message Definitions.  Following the recommendations of Market Practice 
+Groups1, participating to these Market Practice Groups, or consulting/adopting the 
+implementation guidelines produced by other existing community of users, can help 
+ensuring this consistency. 
+• Also for the benefit of users that are participating in many ISO 20022 communities, it 
+is important to adopt the new versions of messages and to synchronise the 
+migration to the new versions across communities of users. ISO 20022 uses a yearly 
+ 
+1 Examples of Market Practice Groups include Securities Market Practice Group (SMPG), Common Global 
+Implementation – Market Practice (CGI-MP), ISO 20022 Real Time Payments Group (RTPG), Payments Market 
+Practice Group (PMPG). 
+
+ 
+Source: ISO 20022 Registration Authority   Last update date: 12th June 2023  
+ 
+maintenance process that culminates with the publication of any new versions of 
+Message Definitions usually in February2. Advance draft versions of these new 
+versions are already made available in December of the previous year.   
+• Implementers and representatives of communities of users are also welcome to 
+participate in the relevant ISO 20022 Standards Evaluation Groups (SEG) which are in 
+charge of evaluating and approving changes requested to existing Message 
+Definitions and new versions of Message Definitions.  Participating in these groups 
+allows users and implementers to make sure that the requested changes are 
+justified and are worth the required implementation effort.   
+2. ISO 20022 Business Transaction 
+Although Business Transactions are not (yet) formally described in ISO 20022, the Message 
+Definition Report (MDR) Part 1 of each message set describes how the organisation that 
+developed the message set recommends the various participants to the transaction to 
+exchange the messages. The MDR Part 1 is one of the three parts of the MDR available for 
+each message set in the Catalogue of Messages. 
+3. Messages must be valid ISO 20022 Message Instances.  
+The actual message instances that are exchanged by the users of the community must 
+comply with the corresponding ISO 20022 Message Definitions. This implies that the XML 
+messages (.xml) must, among others, be valid against the corresponding XML schema (.xsd) 
+ 
+2 The official publication deadline of new versions resulting from the yearly maintenance is April-May of each 
+year.  
+
+ 
+Source: ISO 20022 Registration Authority   Last update date: 12th June 2023  
+ 
+published in the Catalogue of Messages3.  This is one of the advantages of XML; the XSD 
+permits an easy validation of the message instances. 
+• Some Market Practice Groups, adoption initiatives or communities of users may 
+generate and publish XML schemas which look like the original ISO 20022 XML 
+schemas, but are in fact restricted versions of the original schema – or subsets -  
+where all the items of the original ISO 20022 schemas not relevant to their 
+implementation have been removed.  If they are constructed in a proper way, in 
+compliance4 with the original ISO 20022 schemas, these subset schemas can be very 
+useful for the community of users to test that their implementation complies with 
+the restrictions they have agreed. The actual ISO 20022 compliance is however 
+always checked against the original ISO 20022 schemas5 published on the 
+iso20022.org website.  
+4. Messages must respect the ISO 20022 Constraints 
+Message instances must be valid against the Constraints that are registered for the Message 
+Definition. Constraints are defined in the Message Definition Report (MDR) Part 2 under the 
+heading “Constraints”. They comprise rules and guidelines. The MDR Part 2 is one of the 
+three parts of the MDR available for each message set in the Catalogue of Messages. 
+ 
+3 Or the message instance must be valid against the ASN.1 Schema, if such an ASN.1 Schema is published in the 
+Catalogue of Messages. Or the message instance must be valid against an approved Domain Specific Syntax 
+Schema, if so indicated in the Catalogue of Messages.  
+4 A subset remains compliant to the original ISO 20022 Message Definition if only optional items are removed 
+or made mandatory, the code sets are restricted to fewer code values, the number of time repetitive items 
+may appear is reduced, a choice is restricted to one or fewer options, the size or pattern of a text item is 
+restricted.  
+5 Under certain conditions, subsets can be officially registered by the RA with a specific ‘variant’ number (see 
+https://www.iso20022.org/variants.page).  In such case, the compliance of the implementation is checked 
+against the schema of the ISO 20022 variant.  
+
+ 
+Source: ISO 20022 Registration Authority   Last update date: 12th June 2023  
+ 
+• Sometimes, the use of a message set is further described in an ISO 20022 Message 
+Usage Guide (MUG). The guidelines in the MUG are part of the official ISO 20022 
+documentation and should therefore be complied with.  
+5. Messages must use registered code values 
+Message Definitions may include internal Code Sets and external Codes Sets. When internal, 
+the possible codes of the Code Set are included in the XML schema, which makes it 
+mandatory to use these codes to comply with rule n° 3 in this checklist. When the Code Set 
+is external to the schema, the possible codes are listed in the lists of External Code Sets that 
+are published on the ISO 20022 website. When message instances use codes from an 
+External Code Set, then these codes must be listed in that external Code Set.  
+• Please note that these lists are reviewed and may be maintained on a quarterly 
+basis. If you would like to add a code to an external code set, please use the specific 
+change request template. 
+6. Use of the Business Application Header 
+The application that receives a message needs to process first preliminary business 
+information, such as who are the business sender and receiver, what is the exact purpose, 
+the message reference, the creation date, the priority, the authorized signature, etc. To 
+facilitate this preliminary processing and avoid that the application had to seek this 
+information at different places within each message, a Business Application Header 
+(head.001) was created by the ISO 20022 Technical Support Group (TSG) in 2010. The BAH is 
+thus a separate structure which includes part of the message payload. The BAH has not been 
+adopted consistently across all business areas: most of the Securities and FX message sets 
+are designed to be used with a BAH, while most Payments message sets, already in use in 
+2010, were not adapted for the BAH, that is, the preliminary business information that is 
+supposed to be conveyed in the BAH is still present in the message itself. As a result, the 
+Catalogue of Messages includes two types of message sets: those that are intended for use 
+with the BAH, because the preliminary business information cannot be included in the 
+message, and those that include the preliminary business information in the message itself 
+
+ 
+Source: ISO 20022 Registration Authority   Last update date: 12th June 2023  
+ 
+and, thus, do not need using a BAH. Each business domain catalogue of messages 
+(Securities, Payments, Trade, Forex, Cards) indicates whether a message set is intended for 
+use with the BAH.  
+The general rule is that the use of the BAH is not mandatory and is thus not a prerequisite 
+for achieving ISO 20022 compliance. Each community of users decides whether they want to 
+use the BAH and for which messages.  
+• Not using the BAH for Message Definitions that are intended for use with the BAH 
+maybe a challenge, since the preliminary business information that is supposed to 
+be conveyed in the BAH cannot be included in the message and will need to be 
+communicated via another means. 
+• Using the BAH for Message Definitions that already include the preliminary business 
+information is always possible, but will require the community of users to agree on 
+which preliminary business information is to be considered when it is present both 
+in the BAH and in the message itself. 
+• The BAH MUG describes the usage guidelines for the BAH. Use of the BAH in a 
+manner that is not compliant with the provisions of the BAH MUG results in non-
+compliance to ISO 20022.  
+7. Use of Supplementary Data extensions 
+Many ISO 20022 Message Definitions include a ‘SupplementaryData’ component that allows 
+communities of users to add information to a message that is not catered for by any other 
+components of the Message Definition.  However, use of this component is submitted to strict 
+rules that are described on this page. 
+Only SupplementaryData extensions authorized by a SEG and registered by the RA must be used. 
+A spreadsheet at the bottom of the above mentioned web page shows the list of ISO 20022 
+Message Definitions that include a SupplementaryData component and which 
+SupplementaryData message extensions have been approved for use in which Message 
+Definition(s). 
+  
+
+ 
+Source: ISO 20022 Registration Authority   Last update date: 12th June 2023  
+ 
+Appendix 
+This document is produced by the RA and the TSG mandated by the RMG through resolution 14/306: 
+“the RMG resolves for the TSG and RA to document clearly what are the requirements to claim ISO 
+20022 compliance.” 
+Normative references 
+[1] ISO 20022 edition 2013 Part 1: Metamodel 
+[2] ISO 20022 edition 2013 Part 4: XML Schema generation 
+[3] ISO 20022 edition 2013 Part 8: ASN.1 generation 
+[4] Catalogue of ISO 20022 messages (Catalogue of change requests | ISO20022) 
+[5] Business Justification Template (https://www.iso20022.org/development-new-iso-20022-
+message-definitions-request)  
+[6] Business Application Header – Frequently Asked Questions 
+(https://www.iso20022.org/catalogue-messages/additional-content-messages/business-application-
+header-bah)  
+[7] ISO 20022 Documentation Clarity Matrix 
+(https://www.iso20022.org/sites/default/files/media/file/ISO20022_Documentation_Clarity_Matrix.
+pdf)  
+Compliance rules 
+1. MessageDefinitions must be registered and published by the ISO 20022 Registration 
+Authority on the iso20022.org website [4]. 
+
+ 
+Source: ISO 20022 Registration Authority   Last update date: 12th June 2023  
+ 
+2. Messages must be valid ISO 20022 MessageInstances. This means validity against the 
+corresponding SyntaxMessageScheme. SyntaxMessageScheme may be expressed using XML 
+[1], ASN.1 [3] or another approved Domain Specific Syntax as per the rules and guidelines 
+described in the business justification template [5]. 
+3. When XML is used as SyntaxMessageScheme, message instances must be valid against the 
+published XSDs [4].  
+4. Message instances must be valid against the Constraints that are registered for this 
+MessageDefinition. Constraints are defined in the MessageDefinitionReport under the 
+heading Constraints. They comprise rules and guidelines.  
+5. When a MessageInstance uses codes from an externally defined CodeSet, then these codes 
+must be listed in that external CodeSet. The list of external CodeSets can be found on the 
+ISO20022.org web site: https://www.iso20022.org/external_code_list.page 
+6. The BAH MUG describes the usage guidelines for the BAH. Use of the BAH in a manner that 
+is not compliant with the provisions of the BAH MUG results in non-compliance to ISO 
+20022.  
+7. The use of SupplementaryData must follow the rules explained on this page:  
+https://www.iso20022.org/supplementary_data.page 
+Only SupplementaryData extensions registered by the RA must be used. The spreadsheet on 
+that web page shows which SupplementaryData message extension applies to which 
+MessageDefinition(s). 
+ 
+  
+
+ 
+Source: ISO 20022 Registration Authority   Last update date: 12th June 2023  
+ 
+Annex – Terminology 
+Below definitions were taken from ISO 20022:2013 Part 1 
+ 
+3.26  
+Constraint  
+rule that shall be universally satisfied, i.e. all conditions required for the Constraint to be applicable 
+are known  
+EXAMPLE An Account has an AccountOwner.  
+ 
+3.45  
+MessageChoreography  
+precise and complete description of a MessageInstance exchange within a BusinessTransaction, 
+describing the sequence and correlation of MessageInstances within a conversation, including the 
+constraints on the interaction between Participants  
+NOTE Every BusinessTransaction contains its own MessageChoreography 
+3.49  
+MessageDefinition  
+formal description of the structure of a MessageInstance  
+NOTE 1 The MessageDefinition is built as a tree structure of MessageComponentTypes and DataTypes. A 
+MessageDefinition is uniquely identified in the BusinessProcessCatalogue.  
+NOTE 2 A MessageDefinition can have several market practices 
+ 
+3.53  
+MessageInstance  
+instance of MessageDefinition, containing a set of structured information exchanged between 
+BusinessRoles, in the scope of a BusinessTransaction  
+EXAMPLE Notice Of Execution, Order To Buy, Credit Transfer.  
+NOTE A MessageInstance is expected to be valid against the related MessageDefinition  in the ISO 20022 
+Repository. This implies validity against the SyntaxMessageScheme as well as validity against the Constraints 
+and market practices that are registered for this MessageDefinition. 
+ 

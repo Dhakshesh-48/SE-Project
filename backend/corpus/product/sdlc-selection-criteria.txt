@@ -1,0 +1,15 @@
+Project condition → suitable SDLC (course selection rules for finance requirement engineering).
+
+Stable requirements and extensive approvals → Waterfall.
+Strict verification and validation → V-Model.
+High uncertainty or technical risk → Spiral.
+Frequently changing requirements → Agile.
+Continuous secure deployment → DevSecOps.
+High regulation with evolving requirements → Agile–V-Model or DevSecOps hybrid.
+
+Decision factors to extract from a specification before choosing:
+requirement stability; regulatory criticality; security risk; project complexity; system size; legacy-system dependence; frequency of expected changes; need for continuous delivery; availability of stakeholders; testing and documentation requirements; budget and schedule constraints; need for formal verification; consequences of system failure.
+
+Produce ranked recommendations with justification, then a project-specific workflow: phases, activities, roles, deliverables, security activities, testing, compliance checkpoints, human-approval gates, entry and exit criteria, traceability.
+
+Related corpus: RBI digital payment Application Security Life Cycle (secure by design, threat modelling, VA/PT across the lifecycle); SEBI CSCRF Secure Software Development Life Cycle (security testing at every stage); NASA systems engineering handbook (iterative and recursive processes).
