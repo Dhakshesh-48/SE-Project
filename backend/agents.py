@@ -1,6 +1,6 @@
 """The two ADK agents.
 
-Analyst (i) runs 3 steps: QUESTIONS, then REQUIREMENTS and OVERVIEW together. Planner (ii) runs 2: RATE, then PLAN.
+Analyst (i) writes REQUIREMENTS and OVERVIEW together. Planner (ii) rates factors, then explains the selected model.
 Every step must answer in a fixed JSON shape (Pydantic), which LM Studio enforces while generating.
 """
 import os
@@ -30,27 +30,12 @@ Level = Literal["Low", "Medium", "High"]
 
 # ---------- Output shapes (same field names as frontend/src/lib/types.ts) ----------
 
-class Option(BaseModel):
-    label: str = Field(max_length=70)
-    recommended: bool = False
-
-
-class Question(BaseModel):
-    text: str = Field(max_length=140, description="One short question, under 20 words; no numbering, no options here")
-    why: str = Field(max_length=140, description="Which gap in the brief this closes; do not mention evidence labels")
-    options: list[Option] = Field(min_length=3, max_length=4, description="Each at most 8 words")
-
-
-class Questions(BaseModel):
-    questions: list[Question] = Field(min_length=3, max_length=4)
-
-
 class Requirement(BaseModel):
     statement: str = Field(max_length=200, description='One "The system shall ..." sentence')
     category: Literal["Functional", "Security", "Privacy", "Regulatory", "Performance", "Availability", "Audit", "Integration", "Data", "Operational"]
     priority: Literal["High", "Medium", "Low"]
     acceptance: str = Field(max_length=180, description="Measurable, testable criterion with a number")
-    source: Literal["E1", "E2", "E3", "E4", "E5", "brief", "answer"] = Field(description="The evidence passage that supports it, else brief or answer")
+    source: Literal["E1", "E2", "E3", "E4", "E5", "brief"] = Field(description="The evidence passage that supports it, else brief")
 
 
 class Finding(BaseModel):
@@ -82,25 +67,15 @@ class Factor(BaseModel):
     name: Literal[tuple(rules.FACTORS)]
     value: Level
     cites: str = Field(max_length=40, description="Requirement IDs that justify the rating, e.g. R2, R5")
-    implication: str = Field(max_length=60)
+    implication: str = Field(max_length=90, description="One short phrase, under 12 words")
 
 
 class Factors(BaseModel):
     factors: list[Factor] = Field(min_length=len(rules.FACTORS), max_length=len(rules.FACTORS))
 
 
-class Phase(BaseModel):
-    phase: str = Field(max_length=60)
-    activities: str = Field(max_length=140)
-    roles: str = Field(max_length=70)
-    deliverables: str = Field(max_length=100)
-    gate: str = Field(max_length=140, description="Exit gate: security, compliance or human-approval checkpoint")
-    reqs: str = Field(max_length=60, description="Requirement IDs this phase covers, e.g. R1, R4")
-
-
 class Plan(BaseModel):
-    justification: str = Field(max_length=600, description="2-4 sentences")
-    workflow: list[Phase] = Field(min_length=4, max_length=6)
+    justification: str = Field(max_length=600, description="2-3 sentences")
 
 
 # ---------- The two agents ----------
@@ -113,28 +88,28 @@ GROUND = (
 
 # Agent (i): identifies and lists the software requirements.
 analyst = LlmAgent(name="analyst", model=MODEL, instruction=(
-    "You are a finance-sector requirements analyst. You either ask the clarifying questions a brief needs, "
-    "or write its software requirements specification, as the task says." + GROUND))
+    "You are a finance-sector requirements analyst. Write a software requirements specification from the project brief "
+    "and approved evidence. Clearly record assumptions, findings, risks and open issues." + GROUND))
 
 # Agent (ii): identifies a suitable SDLC for that specification.
 planner = LlmAgent(name="planner", model=MODEL, instruction=(
-    "You are a software process expert who picks and plans the SDLC for a finance project from its SRS." + GROUND))
+    "You are a software process expert who recommends one SDLC for a finance project and explains the decision." + GROUND))
 
 # What each agent is asked to do, step by step, and the JSON shape it must answer in.
-QUESTIONS = ("Find what the brief leaves unclear that blocks testable requirements. Ask the project owner 3 or 4 short "
-             "questions about THEIR project (users, business rules, limits, integrations, volumes, who approves releases, "
-             "data retention), each about one thing, each with 3-4 short answer options; mark the likeliest recommended. "
-             "Never quiz them about what regulations say.", Questions)
-REQUIREMENTS = ("List the software requirements from the brief, the user's answers and the evidence: 8-10 requirements "
-                "covering functional and non-functional needs (security, privacy, regulatory, audit, performance). Every "
-                "acceptance criterion must be measurable. Do not put IDs in statements.", Requirements)
-OVERVIEW = ("Write the SRS overview for the brief and the user's answers: title, summary, assumptions, stakeholders, "
+REQUIREMENTS = ("List the software requirements from the project brief and evidence: 8-10 requirements covering "
+                "functional and non-functional needs (security, privacy, regulatory, audit, performance). Every "
+                "acceptance criterion must be measurable. Priority rule: High = legal/regulatory duty, security, or "
+                "moving or recording money; Medium = needed to run or support the system; Low = convenience. "
+                "Do not put IDs in statements.", Requirements)
+OVERVIEW = ("Write the SRS overview for the project brief: title, summary, assumptions, stakeholders, "
             "and honestly the main quality findings (ambiguous or missing information), risks and open issues.", Overview)
-RATE = ("Rate every listed decision factor Low, Medium or High for this SRS (High = the project has more of it, e.g. High "
-        "requirement stability = requirements will rarely change), citing the requirement IDs behind each rating.", Factors)
-PLAN = ("The chosen SDLC and its score are given. Explain why it fits this SRS and write a "
-        "project-specific workflow: phases with activities, roles, deliverables, an exit gate (security, compliance or "
-        "human-approval checkpoint) and requirement IDs.", Plan)
+RATE = ("Rate every listed decision factor Low, Medium or High. Judge requirement stability and expected change "
+        "frequency from the project brief only; do not infer change from scheduled jobs, reviews or possible future "
+        "regulation. Rate expected change frequency High only if the brief says needs are evolving. Cite requirement "
+        "IDs (R-IDs) only. Keep each implication one short phrase under 12 words.", Factors)
+PLAN = ("The chosen SDLC, its score, score drivers, and other model scores are given. Explain in 2-3 plain sentences "
+       "why the chosen model fits, naming its score drivers and the supporting requirement IDs. Never cite evidence IDs. "
+       "Do not create a workflow.", Plan)
 
 
 async def ask(agent: LlmAgent, step: tuple[str, type[BaseModel]], context: str, trace: list) -> dict:

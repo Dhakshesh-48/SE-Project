@@ -20,28 +20,21 @@ export type SRS = {
 export type SDLC = {
   chosen: string;
   justification: string;
-  ranking: { model: string; score: number; why: string }[];
+  ranking: {
+    model: string;
+    score: number;
+    base: number;
+    drivers: { factor: string; level: string; points: number }[];
+    fit: string;
+    miss: string;
+  }[];
   factors: {
     name: string;
     value: string;
     cites: string;
     implication: string;
+    confidence: string;
   }[];
-  workflow: {
-    phase: string;
-    activities: string;
-    roles: string;
-    deliverables: string;
-    gate: string;
-    reqs: string;
-  }[];
-  rejected: { model: string; why: string }[];
-};
-export type Question = {
-  id: string;
-  text: string;
-  why: string;
-  options: { label: string; recommended: boolean }[];
 };
 export type Span = {
   name: string;
@@ -59,16 +52,10 @@ export type Item = {
   text?: string;
   title?: string;
   strong?: string;
-  questions?: Question[];
-  answers?: { questionId: string; value: string | null }[];
-  status?: string;
   srs?: SRS;
   sdlc?: SDLC;
   steps?: Span[];
   messages?: { from: string; to: string; text: string }[];
-  subtitle?: string;
-  footnote?: string;
-  breakdown?: [string, string][];
 };
 export type RunEvent = {
   type: string;

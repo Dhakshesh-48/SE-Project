@@ -6,7 +6,7 @@ export default defineConfig({
   resolve: { alias: { "@": new URL("./src", import.meta.url).pathname } },
   server: {
     host: "127.0.0.1",
-    proxy: { "/api": { target: "http://127.0.0.1:8001", changeOrigin: true } },
+    proxy: { "/api": { target: "http://127.0.0.1:8000", changeOrigin: true } },
   },
-  preview: { host: "127.0.0.1", proxy: { "/api": "http://127.0.0.1:8001" } },
+  preview: { host: "127.0.0.1", proxy: { "/api": "http://127.0.0.1:8000" } },
 });

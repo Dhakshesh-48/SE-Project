@@ -39,7 +39,7 @@ for f in sorted(CORPUS.rglob("*.txt")):
     text = f.read_text(errors="ignore")
     for i in range(0, len(text), 1200):
         if not re.search(r"Skip to main content|Not Pressed|▼", text[i : i + 1200]):
-            CHUNKS[f"{f.relative_to(CORPUS)}#chunk-{i // 1200 + 1}"] = text[i : i + 1200]
+            CHUNKS[f"{f.relative_to(CORPUS).as_posix()}#chunk-{i // 1200 + 1}"] = text[i : i + 1200]
 IDS = list(CHUNKS)
 BM25 = BM25Okapi([words(t) for t in CHUNKS.values()])
 
@@ -54,10 +54,15 @@ def search(query: str, k: int = 4) -> dict[str, str]:
     scores = BM25.get_scores(words(query))
     ranked = [[IDS[i] for i in scores.argsort()[::-1][:50]]]
     try:
-        if VECTORS.count() != len(IDS):  # first run: embed the corpus once (~40 s)
-            for i in range(0, len(IDS), 64):
-                VECTORS.upsert(ids=IDS[i : i + 64], documents=[f"search_document: {CHUNKS[c]}" for c in IDS[i : i + 64]])
-        ranked.append(VECTORS.query(query_texts=[f"search_query: {query}"], n_results=50)["ids"][0])
+        expected = set(IDS)
+        stored = set(VECTORS.get()["ids"])
+        stale, missing = stored - expected, expected - stored
+        if stale:
+            VECTORS.delete(ids=list(stale))
+        for i in range(0, len(missing), 64):
+            batch = sorted(missing)[i : i + 64]
+            VECTORS.upsert(ids=batch, documents=[f"search_document: {CHUNKS[c]}" for c in batch])
+        ranked.append([cid for cid in VECTORS.query(query_texts=[f"search_query: {query}"], n_results=50)["ids"][0] if cid in CHUNKS])
     except Exception:  # embedding model not loaded → keyword search alone still works
         pass
     fused = Counter()
@@ -70,10 +75,27 @@ def search(query: str, k: int = 4) -> dict[str, str]:
 # ---------- 3. Validate the SRS the model wrote ----------
 
 def plain(text: str) -> str:
-    """Remove evidence labels (E1…E5) from text people read; the source field keeps the real citation."""
-    text = re.sub(r"\s*\((?:E\d[,;\s]*)+\)", "", text)
-    text = re.sub(r"\bE\d\b", "the regulation", text)
+    """Remove evidence labels and turn a run of evidence IDs into one plain reference."""
+    text = re.sub(r"\s*\([^)]*\bE\d+\b[^)]*\)", "", text)
+    citations = r"\bE\d+(?:\s*(?:,\s*|\band\s+)E\d+)*\b"
+    text = re.sub(citations, "the regulation", text)
+    text = re.sub(r"\s+([,.;:!?])", r"\1", text)
+    text = re.sub(r"\s{2,}", " ", text).strip()
     return text[:1].upper() + text[1:]
+
+
+def clip(text: str, limit: int = 80) -> str:
+    """Clip to a complete sentence when possible, otherwise to a whole word."""
+    if len(text) <= limit:
+        return text
+    head = text[:limit].rstrip()
+    sentence = head.rfind(".")
+    if sentence >= 0:
+        return head[: sentence + 1].rstrip()
+    whole = re.sub(r"\s+\S*$", "", head).rstrip()
+    if not whole:
+        whole = head
+    return whole + "…"
 
 
 VAGUE = re.compile(r"\b(fast|quick|easy|user[- ]friendly|real[- ]time|secure|robust|efficient|appropriate|as needed|etc)\b", re.I)
@@ -96,7 +118,7 @@ def validate(srs: dict, evidence_ids: set[str]) -> dict:
         elif VAGUE.search(r["acceptance"]) and not re.search(r"\d", r["acceptance"]):
             findings.append({"type": "Ambiguity", "text": f"{r['id']}: “{VAGUE.search(r['acceptance']).group()}” is not measurable."})
         # A citation must be a chunk we actually retrieved, otherwise it may be invented.
-        if r.get("source") not in evidence_ids and r.get("source", "").lower() not in ("brief", "answer"):
+        if r.get("source") not in evidence_ids and r.get("source", "").lower() != "brief":
             r["source"] = "NEEDS-VALIDATION"
     srs["findings"] = findings
     # The card already says "SRS", so drop it from either end of the title.
@@ -117,46 +139,54 @@ FACTORS = [
 ]
 LEVEL = {"Low": 0, "Medium": 1, "High": 2}
 
-# Base score + weight per factor (applied to Low=0 / Medium=1 / High=2). Built from corpus/product/sdlc-selection-criteria.txt:
-# stable + approvals → Waterfall; strict V&V → V-Model; uncertainty/risk → Spiral; changing → Agile;
-# continuous secure deployment → DevSecOps; rapid → RAD; regulated + evolving → Agile–V-Model hybrid.
+# Base score + weight per factor (applied to Low=0 / Medium=1 / High=2).
 MODELS = {
     "Waterfall": (50, {"Requirement stability": 10, "Testing and documentation formality": 5, "Regulatory criticality": 3,
                        "Expected change frequency": -10, "Need for continuous delivery": -6, "Project complexity": -3, "System size": -2}),
     "V-Model": (50, {"Need for formal verification": 8, "Testing and documentation formality": 6, "Regulatory criticality": 6,
                      "Failure consequence": 5, "Requirement stability": 5, "Expected change frequency": -8, "Need for continuous delivery": -5}),
     "Spiral": (57, {"Failure consequence": 6, "Project complexity": 7, "System size": 3, "Requirement stability": -6}),
+    "Prototyping": (60, {"Expected change frequency": 7, "Budget and schedule pressure": 6, "Stakeholder availability": 4,
+                         "Project complexity": -7, "System size": -5, "Regulatory criticality": -6, "Failure consequence": -7}),
+    "Iterative": (54, {"Project complexity": 6, "System size": 6, "Expected change frequency": 4, "Stakeholder availability": 3,
+                       "Requirement stability": -2, "Need for continuous delivery": 2}),
     "Agile": (50, {"Expected change frequency": 10, "Need for continuous delivery": 6, "Stakeholder availability": 5,
                    "Testing and documentation formality": -6, "Regulatory criticality": -5, "Requirement stability": -3}),
-    "DevSecOps": (40, {"Need for continuous delivery": 10, "Security risk": 7, "Expected change frequency": 4,
-                       "Testing and documentation formality": -2}),
     "RAD": (52, {"Expected change frequency": 5, "Budget and schedule pressure": 4, "Project complexity": -6,
                  "Failure consequence": -6, "Regulatory criticality": -6}),
-    "Agile–V-Model hybrid": (46, {"Regulatory criticality": 6, "Expected change frequency": 6, "Need for formal verification": 5,
-                                  "Security risk": 3, "Testing and documentation formality": 3, "Need for continuous delivery": 2,
-                                  "Requirement stability": -2}),
 }
 
 
-# Why each model fits, and why it is passed over (shown in the ranking and the "Rejected" tab).
+# Why each model fits and misses, given the project.
 WHY = {
-    "Waterfall": ("stable requirements and extensive approvals", "testing comes late, so verification evidence arrives after design is locked"),
-    "V-Model": ("strict verification and validation: every build phase has a matching test phase", "rigid once a phase closes; late changes are expensive"),
-    "Spiral": ("risk-driven loops for high uncertainty or technical risk", "heavy risk analysis each loop is costly when requirements are clear"),
-    "Agile": ("short iterations absorb frequently changing requirements", "light documentation clashes with formal audit and sign-off"),
-    "DevSecOps": ("continuous secure deployment with automated security checks", "its value is continuous delivery, which this project needs little of"),
-    "RAD": ("rapid prototyping for small, low-risk systems", "too little rigour for high-risk or regulated systems"),
-    "Agile–V-Model hybrid": ("high regulation with evolving requirements: iterations plus V-Model verification gates", "two processes to run; only pays off when requirements keep changing"),
+    "Waterfall": ("Stable requirements support sequential phases and clear approvals.", "Late changes and late testing can make feedback expensive."),
+    "V-Model": ("Formal verification links each build stage to its tests.", "Its staged structure can make late changes costly."),
+    "Spiral": ("Risk driven cycles help resolve major uncertainty early.", "Repeated risk analysis adds overhead to straightforward projects."),
+    "Prototyping": ("Early prototypes help clarify uncertain needs with stakeholders.", "Prototypes alone offer less control for complex or high risk systems."),
+    "Iterative": ("Repeated increments manage large systems and evolving detail.", "Frequent cycles require steady stakeholder feedback."),
+    "Agile": ("Short iterations adapt quickly when requirements change.", "Lightweight planning may not suit rigid verification needs."),
+    "RAD": ("Rapid delivery fits small projects with limited risk.", "Speed can reduce rigor for complex or regulated systems."),
 }
+
+
+def explain(levels: dict[str, str]) -> list[dict]:
+    """Return every model's capped score and its level-by-level scoring explanation, best first."""
+    explanations = []
+    for model, (base, weights) in MODELS.items():
+        drivers = [
+            {"factor": factor, "level": levels.get(factor, "Medium"),
+             "points": weight * LEVEL.get(levels.get(factor, "Medium"), 1)}
+            for factor, weight in weights.items()
+        ]
+        score = max(5, min(97, base + sum(driver["points"] for driver in drivers)))
+        fit, miss = WHY[model]
+        explanations.append({"model": model, "score": score, "base": base, "drivers": drivers, "fit": fit, "miss": miss})
+    return sorted(explanations, key=lambda entry: (-entry["score"], entry["model"]))
 
 
 def rank(levels: dict[str, str]) -> list[tuple[str, int]]:
-    """[(model, score 5–97)] best first. Same input → same ranking, so it can't contradict the choice."""
-    scores = {
-        m: max(5, min(97, base + sum(w * LEVEL.get(levels.get(f, "Medium"), 1) for f, w in weights.items())))
-        for m, (base, weights) in MODELS.items()
-    }
-    return sorted(scores.items(), key=lambda kv: -kv[1])
+    """Return [(model, score)] from the full score explanation, best first."""
+    return [(entry["model"], entry["score"]) for entry in explain(levels)]
 
 
 if __name__ == "__main__":  # self-check: python rules.py
@@ -167,11 +197,22 @@ if __name__ == "__main__":  # self-check: python rules.py
     assert [t["test"] for t in srs["traceability"]] == ["TC001", "TC002"] and srs["requirements"][0]["source"] == "NEEDS-VALIDATION"
     assert srs["requirements"][0]["statement"] == "Log in."
     assert validate({"requirements": [], "title": "UPI App - SRS Overview"}, set())["title"] == "UPI App"
-    assert plain("High risk (E1, E2) as required by E3.") == "High risk as required by the regulation."
+    assert plain("High risk (citing E1, E2) as required by E1, E2 and E3.") == "High risk as required by the regulation."
     assert {f["type"] for f in srs["findings"]} == {"Ambiguity", "Conflict", "Incompleteness"}
     bank = dict.fromkeys(FACTORS, "Medium") | {f: "High" for f in ["Requirement stability", "Regulatory criticality",
             "Need for formal verification", "Testing and documentation formality", "Failure consequence"]} | {"Expected change frequency": "Low"}
+    assert set(MODELS) == {"Waterfall", "V-Model", "Spiral", "Prototyping", "Iterative", "Agile", "RAD"}
+    assert set(WHY) == set(MODELS)
     assert rank(bank)[0][0] == "V-Model"
     shop = dict.fromkeys(FACTORS, "Low") | {"Expected change frequency": "High", "Need for continuous delivery": "High", "Security risk": "High"}
-    assert rank(shop)[0][0] in ("Agile", "DevSecOps")
+    assert rank(shop)[0][0] in ("Agile", "Iterative")
+    unclear = dict.fromkeys(FACTORS, "Low") | {"Expected change frequency": "High", "Budget and schedule pressure": "High"}
+    assert rank(unclear)[0][0] == "Prototyping"
+    big = dict.fromkeys(FACTORS, "Medium") | {"Project complexity": "High", "System size": "High", "Failure consequence": "High"}
+    assert rank(big)[0][0] in ("Iterative", "Spiral")
+    rows = explain(bank)
+    for entry in rows:
+        assert entry["score"] == max(5, min(97, entry["base"] + sum(d["points"] for d in entry["drivers"])))
+    assert clip("This is a complete sentence. " + "x" * 90, 40) == "This is a complete sentence."
+    assert clip("A long phrase without sentence punctuation for clipping", 25) == "A long phrase without…"
     print(f"ok — {len(CHUNKS)} chunks indexed")

@@ -30,16 +30,16 @@ const examples = [
 
 export const steps = [
   {
-    title: "Clarify",
-    description: "The analyst reads your brief and asks about the gaps.",
-  },
-  {
     title: "Specify",
-    description: "Get a requirements spec with acceptance criteria and test traces.",
+    description: "The analyst turns your brief into testable requirements and traces.",
   },
   {
-    title: "Plan",
-    description: "The planner picks a lifecycle with phases and review gates.",
+    title: "Recommend",
+    description: "The planner scores seven SDLC models and explains the best fit.",
+  },
+  {
+    title: "Review",
+    description: "Inspect the requirements, evidence and model ranking.",
   },
 ];
 
@@ -83,7 +83,7 @@ export function Home({
             </h1>
             <p className="max-w-md text-[15px] text-muted-foreground">
               Describe your project. BearBots turns it into testable requirements
-              and a development workflow that fits.
+              and a scored lifecycle recommendation that fits.
             </p>
           </div>
 

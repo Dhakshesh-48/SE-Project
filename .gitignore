@@ -1,0 +1,18 @@
+# Python environment and bytecode
+backend/.venv/
+backend/__pycache__/
+
+# Local model index and audit/session output
+backend/chroma/
+backend/runs/
+
+# Local settings may contain credentials or machine-specific values
+backend/.env
+
+# Frontend dependencies and generated assets
+frontend/node_modules/
+frontend/dist/
+
+# OS metadata
+.DS_Store
+Thumbs.db

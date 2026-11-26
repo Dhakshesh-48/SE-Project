@@ -1,15 +1,13 @@
-Project condition → suitable SDLC (course selection rules for finance requirement engineering).
+Project condition → suitable SDLC model.
 
-Stable requirements and extensive approvals → Waterfall.
-Strict verification and validation → V-Model.
-High uncertainty or technical risk → Spiral.
-Frequently changing requirements → Agile.
-Continuous secure deployment → DevSecOps.
-High regulation with evolving requirements → Agile–V-Model or DevSecOps hybrid.
+Waterfall: stable requirements, sequential delivery, and formal approvals.
+V-Model: strict verification and validation with tests traced to each development stage.
+Spiral: high uncertainty, technical risk, or severe failure consequences managed through risk-driven cycles.
+Prototyping: unclear needs that benefit from early experiments and stakeholder feedback.
+Iterative: large or complex systems that can be delivered and refined in increments.
+Agile: explicitly evolving needs, frequent stakeholder feedback, and short delivery cycles.
+RAD: small, low-risk work where rapid construction and delivery are the main constraints.
 
-Decision factors to extract from a specification before choosing:
-requirement stability; regulatory criticality; security risk; project complexity; system size; legacy-system dependence; frequency of expected changes; need for continuous delivery; availability of stakeholders; testing and documentation requirements; budget and schedule constraints; need for formal verification; consequences of system failure.
+Assess these factors: requirement stability; regulatory criticality; security risk; project complexity; system size; legacy-system dependence; expected change frequency; need for continuous delivery; stakeholder availability; testing and documentation formality; budget and schedule pressure; need for formal verification; failure consequence. Judge requirement stability and expected change frequency from the project brief. Do not infer evolving needs from scheduled jobs, recurring reviews, or possible future regulation. Rate change frequency High only when the brief says needs are evolving.
 
-Produce ranked recommendations with justification, then a project-specific workflow: phases, activities, roles, deliverables, security activities, testing, compliance checkpoints, human-approval gates, entry and exit criteria, traceability.
-
-Related corpus: RBI digital payment Application Security Life Cycle (secure by design, threat modelling, VA/PT across the lifecycle); SEBI CSCRF Secure Software Development Life Cycle (security testing at every stage); NASA systems engineering handbook (iterative and recursive processes).
+Recommend exactly one of these seven models: Waterfall, V-Model, Spiral, Prototyping, Iterative, Agile, RAD.

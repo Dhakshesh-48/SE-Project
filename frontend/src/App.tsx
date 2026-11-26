@@ -138,7 +138,7 @@ export default function App() {
           <DialogHeader>
             <DialogTitle className="text-xl">From idea to a clear plan</DialogTitle>
             <DialogDescription>
-              BearBots brings a requirements analyst and a development planner together in one guided chat.
+              BearBots turns a project brief into testable requirements and a scored lifecycle recommendation.
             </DialogDescription>
           </DialogHeader>
           <ol className="space-y-3">
@@ -156,9 +156,9 @@ export default function App() {
           </ol>
           <div className="space-y-2 rounded-2xl bg-muted/60 p-4 text-sm text-muted-foreground">
             <p>
-              <strong className="text-foreground">You’re in control.</strong> Review the requirements and ask for
-              changes before continuing. Generated documents are drafts; regulatory interpretations and final
-              decisions need qualified human review.
+              <strong className="text-foreground">Review the result.</strong> BearBots drafts the requirements and
+              automatically compares seven lifecycle models. Generated documents are drafts; regulatory
+              interpretations and final decisions need qualified human review.
             </p>
             <p>
               Recent project titles are saved in this browser. Live sessions stay in backend memory and reset when the

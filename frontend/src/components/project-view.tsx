@@ -1,12 +1,9 @@
 import { useState } from "react";
 import {
-  ArrowRight,
   Check,
   CircleCheck,
   Loader2,
-  PencilLine,
   ShieldAlert,
-  ShieldCheck,
 } from "lucide-react";
 import type { Item } from "@/lib/types";
 import {
@@ -17,11 +14,9 @@ import {
 import { Message, MessageContent, MessageResponse } from "@/components/ai-elements/message";
 import { PromptInputProvider } from "@/components/ai-elements/prompt-input";
 import { Shimmer } from "@/components/ai-elements/shimmer";
-import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Composer } from "@/components/composer";
 import { Delegation } from "@/components/activity";
-import { Questions } from "@/components/questions";
 import { SdlcDocument, SrsDocument } from "@/components/documents";
 import { cn } from "@/lib/utils";
 
@@ -29,9 +24,9 @@ type Echo = { id: string; after: string | null; text: string };
 
 const STEPS = [
   { name: "Brief", stages: ["intake"] },
-  { name: "Clarify", stages: ["clarify"] },
-  { name: "Requirements", stages: ["srs", "handoff"] },
-  { name: "Workflow", stages: ["sdlc", "review"] },
+  { name: "Requirements", stages: ["srs"] },
+  { name: "Recommendation", stages: ["sdlc"] },
+  { name: "Review", stages: ["review"] },
 ];
 
 function Stepper({ stage }: { stage: string }) {
@@ -64,81 +59,6 @@ function Stepper({ stage }: { stage: string }) {
 
 export { Stepper };
 
-function Approval({
-  item,
-  pending,
-  onReply,
-}: {
-  item: Item;
-  pending: boolean;
-  onReply: (body: unknown) => Promise<boolean>;
-}) {
-  const [sent, setSent] = useState("");
-  const status = item.status && item.status !== "pending" ? item.status : sent;
-
-  if (status) {
-    return (
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        {status === "allowed" ? (
-          <>
-            <CircleCheck className="size-4 text-emerald-600" />
-            Approved — requirements handed to the SDLC planner.
-          </>
-        ) : (
-          <>
-            <PencilLine className="size-4" />
-            Revision requested.
-          </>
-        )}
-      </div>
-    );
-  }
-
-  async function submit(decision: string) {
-    if (await onReply({ itemId: item.id, decision })) setSent(decision);
-  }
-
-  return (
-    <div className="w-full rounded-3xl border bg-background p-5 shadow-[0_2px_16px_-6px_rgb(0_0_0/0.08)] sm:p-6">
-      <div className="flex gap-3">
-        <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-muted">
-          <ShieldCheck className="size-[18px]" />
-        </div>
-        <div className="min-w-0 space-y-1">
-          <h3 className="text-[15px] font-semibold">{item.title || "Ready for the next step?"}</h3>
-          <p className="text-sm text-muted-foreground">
-            {item.subtitle || "Send the requirements to the planner for a lifecycle recommendation."}
-          </p>
-        </div>
-      </div>
-      {item.breakdown && item.breakdown.length > 0 && (
-        <dl className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
-          {item.breakdown.map(([k, v]) => (
-            <div key={k} className="flex flex-col-reverse rounded-2xl bg-muted/60 px-3 py-2.5">
-              <dt className="text-xs text-muted-foreground">{k}</dt>
-              <dd className="text-lg font-semibold tabular-nums">{v}</dd>
-            </div>
-          ))}
-        </dl>
-      )}
-      <div className="mt-4 flex flex-col-reverse items-stretch justify-between gap-3 sm:flex-row sm:items-center">
-        <p className="text-xs text-muted-foreground">{item.footnote}</p>
-        <div className="flex shrink-0 gap-2">
-          <Button variant="outline" className="flex-1 rounded-full" disabled={pending} onClick={() => submit("revise")}>
-            <PencilLine />
-            Request changes
-          </Button>
-          <Button className="flex-1 rounded-full" disabled={pending} onClick={() => submit("allowed")}>
-            {pending && <Loader2 className="animate-spin" />}
-            Approve & continue
-            <ArrowRight />
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function UserBubble({ text }: { text: string }) {
   return (
     <Message from="user">
@@ -152,7 +72,7 @@ function UserBubble({ text }: { text: string }) {
 function workingText(stage: string) {
   if (stage === "intake") return "Reading your brief and retrieving references…";
   if (stage === "sdlc" || stage === "handoff") return "Evaluating lifecycle options…";
-  return "Drafting requirements from your answers…";
+  return "Drafting requirements from your brief…";
 }
 
 export function ProjectView({
@@ -171,10 +91,7 @@ export function ProjectView({
   onReply: (body: unknown) => Promise<boolean>;
 }) {
   const [echoes, setEchoes] = useState<Echo[]>([]);
-  const lastApproval = [...items].reverse().find((i) => i.kind === "approval");
   const lastId = items.at(-1)?.id ?? null;
-  const awaitingRevision =
-    lastApproval?.status === "revise" && !echoes.some((e) => e.id === `rev-${lastApproval.id}`);
   const done = stage === "done";
   const working = agents.length > 0 && !done;
 
@@ -183,7 +100,7 @@ export function ProjectView({
     if (ok)
       setEchoes((e) => [
         ...e,
-        { id: awaitingRevision ? `rev-${lastApproval!.id}` : `msg-${Date.now()}`, after: lastId, text },
+        { id: `msg-${Date.now()}`, after: lastId, text },
       ]);
     return ok;
   }
@@ -199,7 +116,7 @@ export function ProjectView({
           {echoesAfter(null)}
           {items.map((item) => (
             <div key={item.id} className="contents">
-              <Row item={item} pending={pending} onReply={onReply} />
+              <Row item={item} />
               {echoesAfter(item.id)}
             </div>
           ))}
@@ -236,9 +153,7 @@ export function ProjectView({
             placeholder={
               done
                 ? "This run is finished — start a new project from the sidebar."
-                : awaitingRevision
-                  ? "Describe what should change in the requirements…"
-                  : "Message BearBots…"
+                : "Message BearBots…"
             }
           />
         </PromptInputProvider>
@@ -252,12 +167,8 @@ export function ProjectView({
 
 function Row({
   item,
-  pending,
-  onReply,
 }: {
   item: Item;
-  pending: boolean;
-  onReply: (body: unknown) => Promise<boolean>;
 }) {
   switch (item.kind) {
     case "bot":
@@ -285,14 +196,10 @@ function Row({
       );
     case "delegation":
       return <Delegation item={item} />;
-    case "questions":
-      return <Questions item={item} pending={pending} onReply={onReply} />;
     case "srs":
       return item.srs ? <SrsDocument srs={item.srs} /> : null;
     case "sdlc":
       return item.sdlc ? <SdlcDocument sdlc={item.sdlc} /> : null;
-    case "approval":
-      return <Approval item={item} pending={pending} onReply={onReply} />;
     case "notice":
       return (
         <Alert className="rounded-2xl border-amber-200 bg-amber-50/60 text-amber-950">
